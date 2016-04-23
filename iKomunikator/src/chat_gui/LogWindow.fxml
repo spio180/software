@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.SampleController">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="488.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="butConnect" layoutX="279.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Połącz" />
+            <Button fx:id="butCancel" layoutX="142.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

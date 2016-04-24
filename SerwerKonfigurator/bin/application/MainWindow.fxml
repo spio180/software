@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="572.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindow">
+   <children>
+      <Pane prefHeight="572.0" prefWidth="460.0">
+         <children>
+            <Label layoutX="14.0" layoutY="18.0" text="Adres IP serwera" />
+            <Label layoutX="14.0" layoutY="43.0" text="Port serwera" />
+            <Label layoutX="14.0" layoutY="68.0" text="Limit polaczen" />
+            <TextField fx:id="txtIP" layoutX="102.0" layoutY="14.0" />
+            <TextField fx:id="txtPort" layoutX="102.0" layoutY="39.0" prefHeight="22.0" prefWidth="49.0" />
+            <TextField fx:id="txtConnectionLimit" layoutX="102.0" layoutY="64.0" prefHeight="22.0" prefWidth="49.0" />
+            <TableView fx:id="tbvForbiddenWords" layoutX="15.0" layoutY="127.0" prefHeight="347.0" prefWidth="443.0">
+              <columns>
+                <TableColumn prefWidth="400.0" text="Wyrazenie" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnRefresh" onMouseClicked="#OnRefreshMouseClicked" layoutX="15.0" layoutY="482.0" mnemonicParsing="false" prefWidth="80.0" text="Odswiez"/>
+            <Button fx:id="btnAdd" onMouseClicked="#OnAddMouseClicked" layoutX="103.0" layoutY="482.0" mnemonicParsing="false" prefWidth="80.0" text="Dodaj"/>
+            <Button fx:id="btnUpdate" onMouseClicked="#OnUpdateMouseClicked" layoutX="191.0" layoutY="482.0" mnemonicParsing="false" prefWidth="80.0" text="Zmien"/>
+            <Button fx:id="btnRemove" onMouseClicked="#OnRemoveMouseClicked" layoutX="279.0" layoutY="482.0" mnemonicParsing="false" prefWidth="80.0" text="Usun"/>
+            <Label layoutX="14.0" layoutY="109.0" text="Wyrazenia zabronione" />
+            <Button fx:id="btnOK" onMouseClicked="#OnOkMouseClicked" layoutX="279.0" layoutY="536.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="80.0" text="OK" />
+            <Button fx:id="btnCancel" onMouseClicked="#OnCancelMouseClicked" layoutX="367.0" layoutY="536.0" mnemonicParsing="false" prefWidth="80.0" text="Anuluj" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

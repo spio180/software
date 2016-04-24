@@ -11,6 +11,7 @@
          <children>
             <Button fx:id="butConnect" layoutX="279.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Połącz" />
             <Button fx:id="butCancel" layoutX="142.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />
+            <TextField fx:id="textClientIP" layoutX="167.0" layoutY="68.0" />
          </children>
       </Pane>
    </center>

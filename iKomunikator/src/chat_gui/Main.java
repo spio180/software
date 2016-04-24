@@ -3,6 +3,7 @@ package chat_gui;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
@@ -12,10 +13,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("LogWindow.fxml"));
-			Scene scene = new Scene(root,400,400);
+		
+			Scene scene = new Scene(root,280,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Logowanie");
+			TextField tf = (TextField) scene.lookup("#userIPTest");
+			tf.setText(TcpClientConnection.getCurrentIPAddress());		
 			primaryStage.show(); 
 		} catch(Exception e) {
 			e.printStackTrace();

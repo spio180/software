@@ -1,17 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.SampleController">
-   <center>
-      <Pane prefHeight="200.0" prefWidth="488.0" BorderPane.alignment="CENTER">
+   <top>
+      <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="280.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="butConnect" layoutX="279.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Połącz" />
-            <Button fx:id="butCancel" layoutX="142.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />
+            <Button fx:id="butConnect" blendMode="SRC_ATOP" contentDisplay="TOP" graphicTextGap="5.0" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Zaloguj" />
+            <Button fx:id="butCancel" blendMode="SRC_ATOP" layoutX="160.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />
+            <Label layoutX="60.0" layoutY="245.0" prefHeight="17.0" prefWidth="112.0" text="Nazwa użytkownika" />
+            <TextField blendMode="SRC_ATOP" layoutX="60.0" layoutY="265.0" />
+            <Arc fill="DODGERBLUE" layoutX="90.0" layoutY="45.0" length="270.0" opacity="0.6" radiusX="33.0" radiusY="30.0" startAngle="45.0" stroke="#606a9e" strokeType="INSIDE" type="ROUND">
+               <effect>
+                  <Reflection />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Arc>
+            <Text fill="DODGERBLUE" fontSmoothingType="LCD" layoutX="121.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Komunikator" wrappingWidth="133.13671875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Text>
+            <Text fill="#8200ff" layoutX="116.0" layoutY="64.0" nodeOrientation="LEFT_TO_RIGHT" stroke="#606a9e" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="i">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <effect>
+                  <Reflection />
+               </effect>
+            </Text>
+            <Label layoutX="60.0" layoutY="115.0" text="IP" />
+            <TextField layoutX="60.0" layoutY="135.0" />
+            <Label layoutX="60.0" layoutY="175.0" text="Port" />
+            <TextField layoutX="60.0" layoutY="195.0" />
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </Pane>
-   </center>
+   </top>
 </BorderPane>

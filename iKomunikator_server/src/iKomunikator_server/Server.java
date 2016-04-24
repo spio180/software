@@ -1,6 +1,7 @@
 package iKomunikator_server;
 
 /**
+ * Simple Http Server opened on given ip and port number.
  * Created by lukasz on 24.04.16.
  */
 
@@ -10,7 +11,6 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 

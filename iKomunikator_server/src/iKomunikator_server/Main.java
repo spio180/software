@@ -9,15 +9,16 @@ package iKomunikator_server;
  */
 public class Main {
 
+	public static final Boolean debug = Boolean.TRUE;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Server started");
-		
-		
-		// TODO Auto-generated method stub
 
+		Configuration conf = new Configuration();
+		conf.loadConfigFromFile("iKomunikator_server/server.cfg");
+		System.out.printf("%s %d %d\n",conf.getServerIp(),conf.getPortNumber(),conf.getConnectionTimeout());
+		Server chat_server = new Server(conf.getServerIp(),conf.getPortNumber());
 	}
 
 }

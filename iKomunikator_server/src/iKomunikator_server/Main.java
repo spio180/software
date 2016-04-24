@@ -18,6 +18,7 @@ public class Main {
 		Configuration conf = new Configuration();
 		conf.loadConfigFromFile("iKomunikator_server/server.cfg");
 		System.out.printf("%s %d %d\n",conf.getServerIp(),conf.getPortNumber(),conf.getConnectionTimeout());
+		Server chat_server = new Server(conf.getServerIp(),conf.getPortNumber());
 	}
 
 }

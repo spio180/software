@@ -20,7 +20,7 @@ public class SampleController {
 
 	@FXML private void connectButtonAction() {
 		ConnectionToServer = new TcpClientConnection();
-		ConnectionToServer.TcpConnect();
+		ConnectionToServer.Connect();
 		
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 	    alert.setTitle("Message Here...");

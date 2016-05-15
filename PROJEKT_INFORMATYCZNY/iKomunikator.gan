@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="iKomunikator" company="Politechnika Poznańska" webLink="http://" view-date="2016-04-18" view-index="0" gantt-divider-location="397" resource-divider-location="300" version="2.7.2" locale="pl">
+    <description/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Nazwa zadania" width="55" order="0"/>
+        <field id="tpd4" name="Data rozpoczęcia" width="20" order="1"/>
+        <field id="tpd5" name="Data zakończenia" width="24" order="2"/>
+        <option id="color.recent"><![CDATA[#ffffff #ff6666 #006600 #33ff66 #669900 #66ffff #99ff99 #000099 #cc00cc #ff6633]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Osoba" width="57" order="0"/>
+        <field id="1" name="Domyślna rola" width="42" order="1"/>
+    </view>
+    <!-- -->
+    <calendars base-id="brak">
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+        <date year="2016" month="4" date="23" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 1]]></date>
+        <date year="2016" month="4" date="24" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 2]]></date>
+        <date year="2016" month="6" date="4" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 3]]></date>
+        <date year="2016" month="6" date="5" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 4]]></date>
+        <date year="2016" month="6" date="11" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 5]]></date>
+        <date year="2016" month="6" date="12" type="WORKING_DAY" color="#ccffff"><![CDATA[sprint 6]]></date>
+        <date year="2016" month="4" date="25" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="26" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="27" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="28" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="29" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="2" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="3" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="4" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="5" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="6" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="7" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="8" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="9" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="10" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="11" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="12" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="13" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="14" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="15" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="16" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="17" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="18" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="19" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="20" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="21" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="22" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="23" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="24" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="25" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="26" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="27" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="28" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="29" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="30" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="31" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="1" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="2" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="3" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="6" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="7" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="8" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="9" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="6" date="10" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="18" type="WORKING_DAY" color="#ccffcc"/>
+        <date year="2016" month="4" date="19" type="WORKING_DAY" color="#ccffcc"/>
+        <date year="2016" month="4" date="20" type="WORKING_DAY" color="#ccffcc"/>
+        <date year="2016" month="4" date="21" type="WORKING_DAY" color="#ccffcc"/>
+        <date year="2016" month="4" date="22" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="4" date="30" type="HOLIDAY" color="#ffffff"/>
+        <date year="2016" month="5" date="1" type="HOLIDAY" color="#ffffff"/>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="pakiet common" color="#660066" meeting="false" start="2016-04-18" duration="9" complete="0" expand="true">
+            <notes><![CDATA[Biblioteka wspólna, która będzie zawierać wszystkie klasy. metody i stałe wykorzystywane przez: serwer, klienta oraz konfigurator.]]></notes>
+        </task>
+        <task id="101" name="backlog produktu" color="#ff6633" meeting="false" start="2016-04-18" duration="10" complete="0" expand="true">
+            <notes><![CDATA[backlog produktu aktualizowany dla każdego sprintu włącznie z priorytetami dla zadań
+]]></notes>
+        </task>
+        <task id="104" name="architektura" color="#cc00cc" meeting="false" start="2016-04-18" duration="10" complete="0" expand="true">
+            <notes><![CDATA[Wsparcie dla zespołu w zakresie architektury rozwiązania]]></notes>
+        </task>
+        <task id="6" name="konfigurator serwera" color="#ffff00" meeting="false" start="2016-04-18" duration="6" complete="0" expand="true">
+            <notes><![CDATA[Formatka służąca do edycji pliku konfiguracyjnego serwera (1 formatka). Serializacja i deserializacja XML. Instalacja usługi na serwerze]]></notes>
+        </task>
+        <task id="7" name="serwer chat-u" color="#009999" meeting="false" start="2016-04-24" duration="5" complete="0" expand="true">
+            <notes><![CDATA[usługa windows (serwer), odczyt z pliku konfiguracyjnego, obsługa klientów chat-u (wymiana komunikatów)]]></notes>
+        </task>
+        <task id="8" name="klient chat-u" color="#cc66ff" meeting="false" start="2016-04-24" duration="5" complete="0" expand="true">
+            <notes><![CDATA[Klient chat-u (GUI) + komunikacja z serwerem (wymiana komunikatów). Brak pliku konfiguracyjnego.]]></notes>
+        </task>
+        <task id="53" name="komunikacja klient-serwer" color="#000000" meeting="false" start="2016-04-23" duration="1" complete="0" expand="true">
+            <notes><![CDATA[ustawienia firewalla na komputerach (odblokowanie portów), test komunikacji klient-serwer wszystkich trzech komupterów klienckich z komputerem-serwerem]]></notes>
+        </task>
+        <task id="110" name="przygotowanie środowiska" color="#99ff99" meeting="false" start="2016-04-23" duration="1" complete="0" expand="true">
+            <notes><![CDATA[Sprawdzenie czy zainstalowane jest niezbędne oprogramowanie, czy jest dostępne połączenie z internetem, czy jest dostęp do JIRA]]></notes>
+        </task>
+        <task id="9" name="dok. produktu" color="#ff3333" meeting="false" start="2016-06-04" duration="4" complete="0" expand="true">
+            <notes><![CDATA[Dokumentacja użytkownika i administratora.
+Ostateczna wersja powinna być wyeksportowana do formatu .pdf.]]></notes>
+        </task>
+        <task id="10" name="testy" color="#3366ff" meeting="false" start="2016-06-04" duration="4" complete="0" expand="true">
+            <notes><![CDATA[Przeprowadzenie testów maualnycj lub / i automatycznych.
+]]></notes>
+        </task>
+        <task id="119" name="stand up" color="#66ffff" meeting="false" start="2016-04-23" duration="6" complete="0" expand="true">
+            <notes><![CDATA[codzienne stand-upy, zebrania, korzystanie z flip chart-a]]></notes>
+        </task>
+        <task id="39" name="archiwizacja" color="#666600" meeting="false" start="2016-04-23" duration="6" complete="0" expand="true">
+            <notes><![CDATA[Archiwizacja wszystkich kodów, dokumentów i binariów po każdym sprincie oraz rospropagowanie ich do wszyskich uczestników projektu (google drive, repozytorium SVN, serwer FTP)]]></notes>
+        </task>
+        <task id="76" name="dokumentacja testów" color="#8cb6ce" meeting="false" start="2016-06-04" duration="4" complete="0" expand="true">
+            <notes><![CDATA[Dokumentacja przeprowadzonych testów. Ostateczna wersja powinna być wyeksportowana do formatu .pdf.]]></notes>
+        </task>
+        <task id="126" name="szablony dokumentacji" color="#ff6666" meeting="false" start="2016-04-23" duration="2" complete="0" expand="true">
+            <notes><![CDATA[Przygotowanie dokumentów zgodnych z szablonami używanymi w projekcie (np. takich jak karta projektu).]]></notes>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Martyna Wilkońska" function="SoftwareDevelopment:4" contacts="" phone=""/>
+        <resource id="1" name="Kasia Florczyk" function="SoftwareDevelopment:3" contacts="" phone=""/>
+        <resource id="2" name="Paweł Kos" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="3" name="Łukasz Woźniak" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="4" name="Łukasz Pieńczak" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="5" name="Krzysztof Krakowski" function="SoftwareDevelopment:8" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="10" resource-id="0" function="SoftwareDevelopment:4" responsible="false" load="65.0"/>
+        <allocation task-id="76" resource-id="0" function="SoftwareDevelopment:4" responsible="false" load="25.0"/>
+        <allocation task-id="110" resource-id="0" function="SoftwareDevelopment:4" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="0" function="SoftwareDevelopment:4" responsible="false" load="5.0"/>
+        <allocation task-id="126" resource-id="0" function="SoftwareDevelopment:4" responsible="false" load="25.0"/>
+        <allocation task-id="9" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="60.0"/>
+        <allocation task-id="110" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="10.0"/>
+        <allocation task-id="126" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="25.0"/>
+        <allocation task-id="39" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="5.0"/>
+        <allocation task-id="8" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="90.0"/>
+        <allocation task-id="53" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="110" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="5.0"/>
+        <allocation task-id="53" resource-id="3" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="7" resource-id="3" function="SoftwareDevelopment:2" responsible="false" load="90.0"/>
+        <allocation task-id="110" resource-id="3" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="3" function="SoftwareDevelopment:2" responsible="false" load="5.0"/>
+        <allocation task-id="0" resource-id="4" function="SoftwareDevelopment:2" responsible="false" load="40.0"/>
+        <allocation task-id="6" resource-id="4" function="SoftwareDevelopment:2" responsible="false" load="45.0"/>
+        <allocation task-id="110" resource-id="4" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="4" function="SoftwareDevelopment:2" responsible="false" load="5.0"/>
+        <allocation task-id="0" resource-id="5" function="SoftwareDevelopment:8" responsible="true" load="25.0"/>
+        <allocation task-id="6" resource-id="5" function="SoftwareDevelopment:8" responsible="true" load="20.0"/>
+        <allocation task-id="101" resource-id="5" function="SoftwareDevelopment:8" responsible="true" load="20.0"/>
+        <allocation task-id="104" resource-id="5" function="SoftwareDevelopment:8" responsible="true" load="20.0"/>
+        <allocation task-id="110" resource-id="5" function="SoftwareDevelopment:8" responsible="false" load="10.0"/>
+        <allocation task-id="119" resource-id="5" function="SoftwareDevelopment:8" responsible="true" load="5.0"/>
+    </allocations>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd3" order="0" width="218" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="80" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="95" visible="true"/>
+        <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd12" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd13" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>

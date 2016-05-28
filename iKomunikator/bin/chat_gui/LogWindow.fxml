@@ -45,7 +45,7 @@
             <Label layoutX="60.0" layoutY="115.0" text="IP" />
             <TextField id="userIPTest" fx:id="textClientIP" layoutX="60.0" layoutY="135.0" />
             <Label layoutX="60.0" layoutY="175.0" text="Port" />
-            <TextField fx:id="textClientPort" layoutX="60.0" layoutY="195.0" promptText="10001" />
+            <TextField fx:id="textClientPort" layoutX="60.0" layoutY="195.0" text="10001" />
          </children>
          <opaqueInsets>
             <Insets />

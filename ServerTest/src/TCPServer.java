@@ -24,7 +24,7 @@ public class TCPServer {
 	public static void main(String[] args) {
 		System.out.println("Starting TCP Server ");
 
-		int port = 10001;
+		int port = 58800;
 
 		String clientSentence;
 	    String capitalizedSentence;
@@ -41,7 +41,7 @@ public class TCPServer {
 			e1.printStackTrace();
 			System.exit(1);
 		}
-		
+
 		InetAddress localaddr;
 		try {
 			localaddr = InetAddress.getLocalHost();
@@ -53,7 +53,7 @@ public class TCPServer {
 			e1.printStackTrace();
 		}
 
-		
+
 
 	    while(answer != 1)
 	    {

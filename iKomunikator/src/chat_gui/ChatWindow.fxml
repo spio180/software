@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="519.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.ChatWindowController">
+   <center>
+      <TabPane prefHeight="486.0" prefWidth="471.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Chat">
+            <content>
+              <AnchorPane minHeight="272.0" minWidth="200.0" prefHeight="272.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="userList" layoutX="27.0" layoutY="14.0" prefHeight="200.0" prefWidth="429.0" />
+                        <TextArea fx:id="textChat" layoutX="27.0" layoutY="229.0" prefHeight="102.0" prefWidth="431.0" wrapText="true" />
+                        <Button fx:id="butWyslij" layoutX="370.0" layoutY="344.0" mnemonicParsing="false" text="Wyślij" />
+                        <Button fx:id="butWyczysc" layoutX="296.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#butWyczyszClick" text="Wyczyść" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <Circle fill="DODGERBLUE" radius="49.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>

@@ -1,7 +1,13 @@
 package common;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.UnknownHostException;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -100,5 +106,29 @@ public class Serialization {
 
 	   return result;
     }
+   
+   public static String SerializeMessage(Message msg) {
+	   String result;
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   XMLEncoder xmlEncoder = new XMLEncoder(baos);
+	   xmlEncoder.writeObject(msg);
+	   xmlEncoder.close();
+	   result = baos.toString();
+	   return result;
+   }
+   
+   public static Message DeSerializeMessage(String msg) {
+	   Message result = new Message();
+	   XMLDecoder decoder=null;
+	   
+	   try {
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(SERIALIZED_FILE_NAME)));
+		} catch (FileNotFoundException ex) {
+			Log.WriteToLog(ex.getMessage());
+		}
+	   
+	   result = (Message)decoder.readObject();
+	   return result;
+   }
 
 }

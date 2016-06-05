@@ -1,5 +1,5 @@
 import java.io.BufferedReader;
-import java.io.Console;
+//import java.io.Console;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,12 +24,12 @@ public class TCPServer {
 	public static void main(String[] args) {
 		System.out.println("Starting TCP Server ");
 
-		int port = 58800;
+		int port = 10001;
 
 		String clientSentence;
 	    String capitalizedSentence;
 	    int answer = 0;
-	    Console console = System.console();
+	    //Console console = System.console();
 
 	    ServerSocket welcomeSocket = null;
 
@@ -54,7 +54,6 @@ public class TCPServer {
 		}
 
 
-
 	    while(answer != 1)
 	    {
 	        System.out.println("Waiting for connection from client ...");
@@ -64,10 +63,14 @@ public class TCPServer {
 				BufferedReader inFromClient =
 			               new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 		        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-		        clientSentence = inFromClient.readLine();
-		        System.out.println("Received: " + clientSentence);
-		        capitalizedSentence = clientSentence.toUpperCase() + '\n';
-		        outToClient.writeBytes(capitalizedSentence);
+
+		        for (int i = 0; i < 2; i++)
+		        {
+		        	clientSentence = inFromClient.readLine();
+		        	System.out.println("Received: " + clientSentence);
+		        	capitalizedSentence = clientSentence.toUpperCase() + '\n';
+		        	outToClient.writeBytes(capitalizedSentence);
+		        }
 
 			} catch (IOException e) {
 
@@ -76,8 +79,8 @@ public class TCPServer {
 
 	        System.out.println("Stop server? [1 - Yes/0 - No]");
 
-	        console = System.console();
-	        answer = Integer.parseInt(console.readLine());
+	        //console = System.console();
+	        answer = 0; //Integer.parseInt(console.readLine());
 
 
 	     }

@@ -17,13 +17,13 @@ import javafx.scene.control.TextArea;
 public class ChatWindowController {
 
 	@FXML private Button butWyczysc;
-	@FXML private Button butWyslij;
-	@FXML private ListView<String> textChat;
+	@FXML public Button butWyslij;
+	@FXML public ListView<String> textChat;
 	@FXML private TextArea textToSend;
 	@FXML private ListView<String> userList;
 
 	private TcpClient tcpConnectionToServer;
-	protected List<String> listOfCom = new ArrayList<>();
+	//protected List<String> listOfCom = new ArrayList<>();
 
 
 	public void setTcpConnectionToServer(TcpClient connection){
@@ -43,8 +43,12 @@ public class ChatWindowController {
 		if (msg.length() != 0)
 		{
 			tcpConnectionToServer.sendMessage(textToSend.getText());
-			listOfCom.add(textToSend.getText());
-			textChat.setItems(FXCollections.observableArrayList(listOfCom));
+			tcpConnectionToServer.listOfCom.add(textToSend.getText());
+
+			System.out.println(tcpConnectionToServer.listOfCom.size());
+
+			textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listOfCom));
+			textChat.scrollTo(tcpConnectionToServer.listOfCom.size()-1);
 			textToSend.clear();
 		}
 	}

@@ -59,13 +59,15 @@ public class LogWindowController {
 
 
 		/*sending logging message */
-		HashMap<String, String> loginPayload = new HashMap<String, String>();
+		/*HashMap<String, String> loginPayload = new HashMap<String, String>();
 		loginPayload.put("LOGIN", userLogin.getText());
 		Message loginMessage = new Message("LOGIN_REQ", userLogin.getText(),
 				"##", loginPayload);
 		System.out.println(Serialization.SerializeMessage(loginMessage));
 		connectionToServer.sendMessage(Serialization.SerializeMessage(loginMessage));
+		*/
 
+		connectionToServer.sendMessage(userLogin.getText());
 		/*verify answear from server */
 
 		if (true) { /*check nee to be implemented*/
@@ -103,6 +105,7 @@ public class LogWindowController {
 			//setting TCP connection for ChatWindow
 			ChatWindowController chatController = (ChatWindowController) loader.getController();
 			chatController.setTcpConnectionToServer(connectionToServer);
+			connectionToServer.setChatController(chatController);
 
 			// get a handle to the stage
 		    Stage stage = (Stage) butConnect.getScene().getWindow();

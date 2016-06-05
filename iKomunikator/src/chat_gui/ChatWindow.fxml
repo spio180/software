@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="519.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.ChatWindowController">
+<BorderPane prefHeight="788.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.ChatWindowController">
    <center>
-      <TabPane prefHeight="486.0" prefWidth="471.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="663.0" prefWidth="471.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Chat">
+          <Tab text="Wszyscy">
             <content>
-              <AnchorPane minHeight="272.0" minWidth="200.0" prefHeight="272.0" prefWidth="200.0">
+              <AnchorPane minHeight="272.0" minWidth="200.0" prefHeight="544.0" prefWidth="471.0">
                      <children>
-                        <ListView fx:id="userList" layoutX="27.0" layoutY="14.0" prefHeight="200.0" prefWidth="429.0" />
-                        <TextArea fx:id="textChat" layoutX="27.0" layoutY="229.0" prefHeight="102.0" prefWidth="431.0" wrapText="true" />
-                        <Button fx:id="butWyslij" layoutX="370.0" layoutY="344.0" mnemonicParsing="false" text="Wyślij" />
-                        <Button fx:id="butWyczysc" layoutX="296.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#butWyczyszClick" text="Wyczyść" />
+                        <ListView fx:id="userList" layoutX="22.0" layoutY="40.0" prefHeight="200.0" prefWidth="429.0" />
+                        <TextArea fx:id="textToSend" layoutX="20.0" layoutY="532.0" prefHeight="102.0" prefWidth="431.0" wrapText="true" />
+                        <Button fx:id="butWyslij" defaultButton="true" layoutX="370.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#butWyslijClick" text="Wyślij" />
+                        <Button fx:id="butWyczysc" layoutX="296.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#butWyczyszClick" text="Wyczyść" />
+                        <Label layoutX="22.0" layoutY="14.0" text="Lista zalogowanych:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="22.0" layoutY="253.0" text="Czat:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="textChat" layoutX="21.0" layoutY="276.0" prefHeight="247.0" prefWidth="429.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -26,6 +40,20 @@
       </TabPane>
    </center>
    <top>
-      <Circle fill="DODGERBLUE" radius="49.0" stroke="BLACK" strokeType="INSIDE" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="79.0" prefWidth="471.0" BorderPane.alignment="CENTER">
+         <children>
+            <Arc fill="DODGERBLUE" layoutX="82.0" layoutY="35.0" length="270.0" opacity="0.6" radiusX="30.0" radiusY="33.0" startAngle="45.0" stroke="#606a9e" strokeType="INSIDE" type="ROUND" />
+            <Text fill="#8200ff" layoutX="109.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="i">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <Text fill="DODGERBLUE" fontSmoothingType="LCD" layoutX="113.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Komunikator">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </top>
 </BorderPane>

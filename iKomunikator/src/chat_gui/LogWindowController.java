@@ -1,12 +1,9 @@
 package chat_gui;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -20,54 +17,64 @@ public class LogWindowController {
 	@FXML TextField userLogin;
 	@FXML Pane tcpClientPort;
 	@FXML TextField textClientPort;
-	private TcpClientConnection ConnectionToServer;
+	private TcpClient connectionToServer;
 
 	@FXML private void closeButtonAction(){
-	    /////////TEST ///////////
-		BorderPane chatWindow;
-		try {
-			chatWindow = (BorderPane)FXMLLoader.load(getClass().getResource("ChatWindow.fxml"));
-			Stage stageChat = new Stage();
-	        stageChat.setTitle("iKomunikator");
-	        stageChat.setScene(new Scene(chatWindow, 480, 550));
-	        stageChat.show();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Chat Window could not be created");
-			e.printStackTrace();
-		}
-
-
-
-		///////////////////////
-
 
 		// get a handle to the stage
 	    Stage stage = (Stage) butCancel.getScene().getWindow();
+
 	    // do what you have to do
 	    stage.close();
-	    //stage.hide();
 	}
 
 	@FXML private void connectButtonAction() {
-		ConnectionToServer = new TcpClientConnection();
 
-		try {
-			ConnectionToServer.createClientSocket(textClientIP.getText(),
+		connectionToServer = new TcpClient();
+
+		/*connection establishing */
+		int rc = connectionToServer.connectToServer(textClientIP.getText(),
 					Integer.parseInt(textClientPort.getText()));
-			ConnectionToServer.Connect(userLogin.getText());
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error in sending message to Server");
-			//e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 
-			System.out.println("Error during creating of Socket");
+		if (rc != 0) return;
+
+		/*sending logging message */
+		connectionToServer.sendMessage(userLogin.getText());
+
+		/*verify answear from server */
+
+		if (true) { /*check nee to be implemented*/
+			//Starting chat window
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatWindow.fxml"));
+			BorderPane chatWindow;
+
+			try {
+
+				chatWindow = (BorderPane) loader.load();
+				Stage stageChat = new Stage();
+		        stageChat.setTitle("iKomunikator");
+		        stageChat.setScene(new Scene(chatWindow, 480, 820));
+		        stageChat.show();
+
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Chat Window could not be created");
+				e.printStackTrace();
+				return;
+			}
+
+			//setting TCP connection for ChatWindow
+			ChatWindowController chatController = (ChatWindowController) loader.getController();
+			chatController.setTcpConnectionToServer(connectionToServer);
+			// get a handle to the stage
+		    Stage stage = (Stage) butConnect.getScene().getWindow();
+
+
+
+		    // do what you have to do
+		    stage.close();
 		}
-
 
 	}
 }

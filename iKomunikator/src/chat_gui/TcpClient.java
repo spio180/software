@@ -13,8 +13,8 @@ import java.net.UnknownHostException;
 public class TcpClient {
 
     private InetAddress connectedAddress;
-    private int connectedPort;
-    private Socket tcpSocket;
+    private int connectedPort = 0;
+    private Socket tcpSocket = null;
     private BufferedReader inBuff;
     private PrintWriter outPrint;
 
@@ -93,7 +93,17 @@ public class TcpClient {
 
     public void terminateListenningThread(){
     	running = false;
+    }
 
+    public void closeSocket(){
+    	if (tcpSocket != null)
+			try {
+				tcpSocket.close();
+			} catch (IOException e) {
+				System.out.println("TCP socket could not be closed");
+				e.printStackTrace();
+
+			}
     }
 
     private class TcpListeningThread implements Runnable{

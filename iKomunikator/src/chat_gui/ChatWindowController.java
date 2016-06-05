@@ -4,12 +4,15 @@ package chat_gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.Message;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+
+
 
 public class ChatWindowController {
 
@@ -35,10 +38,15 @@ public class ChatWindowController {
 
 	@FXML private void butWyslijClick(){
 
-		tcpConnectionToServer.sendMessage(textToSend.getText());
-		listOfCom.add(textToSend.getText());
-		textChat.setItems(FXCollections.observableArrayList(listOfCom));
-		textToSend.clear();
+		String msg = textToSend.getText();
+
+		if (msg.length() != 0)
+		{
+			tcpConnectionToServer.sendMessage(textToSend.getText());
+			listOfCom.add(textToSend.getText());
+			textChat.setItems(FXCollections.observableArrayList(listOfCom));
+			textToSend.clear();
+		}
 	}
 
 }

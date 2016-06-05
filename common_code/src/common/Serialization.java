@@ -118,6 +118,7 @@ public class Serialization {
 	   xmlEncoder.writeObject(msg);
 	   xmlEncoder.close();
 	   result = baos.toString();
+	   result = result.replace("\\n", "").replace("\n", "");
 	   return result;
    }
    

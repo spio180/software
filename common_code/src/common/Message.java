@@ -1,45 +1,56 @@
 package common;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.HashMap;
 
-public class Message {	
+public class Message implements Serializable {	
+	private static final long serialVersionUID = 3053534860334056800L;
 	private String type;
 	private String sender;
 	private String receiver;
-	private ArrayList<String> messageBody = new ArrayList<String>();
+	private HashMap<String,String> messageBody = new HashMap<String,String>();
+
 	
-	public String GetType() {
-		return this.type;
+	public String getType() {
+		return type;
 	}
-	
-	public void SetType(String type) {
+
+	public void setType(String type) {
 		this.type = type;
 	}
-	
-	public String GetSender() {
-		return this.sender;
+
+	public String getSender() {
+		return sender;
 	}
-	
-	public void SetSender(String sender) {
+
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
-	
-	public String GetReceiver() {
-		return this.receiver;
+
+	public String getReceiver() {
+		return receiver;
 	}
-	
-	public void SetReceiver(String receiver) {
+
+	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
-	
-	public ArrayList<String> GetMessageBody() {
-		return this.messageBody;
+
+	public HashMap<String,String> getMessageBody() {
+		return messageBody;
+	}
+
+	public void setMessageBody(HashMap<String,String> messageBody) {
+		this.messageBody = messageBody;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Message() {
+		
 	}
 	
-	public void GetMessageBody(ArrayList<String> messagebody) {
-		this.messageBody = messagebody;
-	}
-	
-	public Message(String type, String sender, String receiver, ArrayList<String> messagebody){
+	public Message(String type, String sender, String receiver, HashMap<String,String> messagebody){
 		this.type = type;
 		this.sender = sender;
 		this.receiver = receiver;

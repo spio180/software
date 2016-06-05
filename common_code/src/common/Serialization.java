@@ -1,13 +1,17 @@
-package common;
+	package common;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -109,7 +113,7 @@ public class Serialization {
    
    public static String SerializeMessage(Message msg) {
 	   String result;
-	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+       ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	   XMLEncoder xmlEncoder = new XMLEncoder(baos);
 	   xmlEncoder.writeObject(msg);
 	   xmlEncoder.close();
@@ -119,15 +123,16 @@ public class Serialization {
    
    public static Message DeSerializeMessage(String msg) {
 	   Message result = new Message();
-	   XMLDecoder decoder=null;
+	   InputStream stream = new ByteArrayInputStream(msg.getBytes(StandardCharsets.UTF_8));
+	   XMLDecoder decoder;
 	   
 	   try {
-			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(SERIALIZED_FILE_NAME)));
-		} catch (FileNotFoundException ex) {
+			decoder = new XMLDecoder(stream);
+			result = (Message)decoder.readObject();
+		} catch (Exception ex) {
 			Log.WriteToLog(ex.getMessage());
 		}
-	   
-	   result = (Message)decoder.readObject();
+	   	   
 	   return result;
    }
 

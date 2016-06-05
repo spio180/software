@@ -24,7 +24,7 @@ public class XmlWriter1 {
 		ConnectionsLimit = connections_limit;		
 	}
 	
-	public Boolean SerializeServerConfig() throws Exception{
+	public Boolean serializeServerConfig() throws Exception{
 		Boolean result = false;
 		
 		try

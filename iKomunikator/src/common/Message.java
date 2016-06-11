@@ -51,11 +51,9 @@ public class Message implements Serializable {
 	}
 
 	public Message() {
-		this.messageBody = new HashMap<String,String>();
 	}
 	
 	public Message(String type, String sender, String receiver, HashMap<String,String> messagebody){
-		this.messageBody = new HashMap<String,String>();
 		this.type = type;
 		this.sender = sender;
 		this.receiver = receiver;

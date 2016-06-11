@@ -1,5 +1,5 @@
 package chat_gui;
-
+import java.awt.Desktop.Action;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,8 +16,7 @@ import common.Const;
 import common.Message;
 import common.Serialization;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Dialog;
 
 public class TcpClient {
 	private InetAddress connectedAddress;
@@ -29,6 +28,7 @@ public class TcpClient {
 	private volatile boolean running = true;
 	public List<String> listOfCom = new ArrayList<>();
 	public ChatWindowController chatController = null;
+	
 	public TcpClient() {
 
 	}
@@ -59,6 +59,7 @@ public class TcpClient {
 
 			/* Starting listenning thread */
 			listennigThread = new Thread(new TcpListeningThread());
+			
 			try {
 				listennigThread.join();
 			} catch (InterruptedException e) {
@@ -93,7 +94,7 @@ public class TcpClient {
 			}
 			
 			String serializedMessage = Serialization.SerializeMessage(message);
-			
+			System.out.println(serializedMessage);
 			this.outPrint.println(serializedMessage);
 			this.outPrint.flush();
 		}
@@ -102,7 +103,6 @@ public class TcpClient {
 	public void terminateListenningThread() {
 		running = false;
 	}
-
 
 	public void setChatController(ChatWindowController chat) {
 		chatController = chat;
@@ -139,17 +139,25 @@ public class TcpClient {
 			while (running) {
 				try {
 					if (inBuff.ready()) {
-						String newLine = inBuff.readLine();
-						newLine = newLine.replace("\\n", "").replace("\n", "");
-
-						System.out.println(newLine);
-						listOfCom.add(newLine);
+						String serializedMessage = inBuff.readLine();
+						System.out.println(serializedMessage);
+						Message message = Serialization.DeSerializeMessage(serializedMessage);
 						
-														// processing you want !
-						if (chatController != null) {
-							chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
-							
+						if (message.getType().equals(Const.MSG_LOGOWANIE_OK)) {
+							this.LogowanieOK(message);
 						}
+						
+						if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
+							this.MessageDoWszystkich(message);
+						}
+						
+						if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
+							this.MessageDoWszystkich(message);
+						}
+						
+						if (message.getType().equals(Const.MSG_LOGOWANIE_BLAD)) {
+							
+						}		
 					}
 
 				} catch (IOException e) {
@@ -159,6 +167,27 @@ public class TcpClient {
 			}
 
 			System.out.println("Listenning thread stopped");
+		}
+		
+		private void LogowanieOK(Message message) {
+			
+			System.out.println(message.toString());
+			ChatWindowController.loggedUserName=message.getReceiver();
+			System.out.println(ChatWindowController.loggedUserName);
+		}
+		
+		private void MessageDoWszystkich(Message message) {
+			if (message.getMessageBody().containsKey(Const.BODY)) {			
+				String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
+
+				System.out.println(messageText);
+				listOfCom.add(messageText);			
+
+				if (chatController != null) {
+					chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
+				
+				}
+			}
 		}
 	}
 }

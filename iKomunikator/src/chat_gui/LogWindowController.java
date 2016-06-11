@@ -24,16 +24,13 @@ public class LogWindowController {
 	private TcpClient connectionToServer = null;
 
 	@FXML private void closeButtonAction(){
-
 		if (connectionToServer != null) {
 			connectionToServer.terminateListenningThread();
 			connectionToServer.closeSocket();
 			System.out.println("Connection to server closed");
 		}
-		// get a handle to the stage
-	    Stage stage = (Stage) butCancel.getScene().getWindow();
 
-	    // do what you have to do
+		Stage stage = (Stage) butCancel.getScene().getWindow();
 	    stage.close();
 	}
 
@@ -55,7 +52,7 @@ public class LogWindowController {
 		loginMessage.setReceiver(Const.USER_SERVER);
 		loginMessage.setSender(userLogin.getText());
         loginMessage.addLineToMessageBody(Const.LOGIN, userLogin.getText());		
-		connectionToServer.sendMessage(loginMessage);
+        connectionToServer.sendMessage(loginMessage);
 		
 		/*verify answear from server */
 
@@ -69,6 +66,10 @@ public class LogWindowController {
 				Stage stageChat = new Stage();
 		        stageChat.setTitle("iKomunikator");
 		        stageChat.setScene(new Scene(chatWindow, 900, 600));
+		        //TextField textToSend = (TextField) stageChat.lookup("textToSend");
+		        //textToSend.requestFocus();
+		        //Button butWyslij = (Button) chatWindow.lookup("butWyslij");
+		        //butWyslij.setDefaultButton(true);
 		        stageChat.show();
 
 		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -82,9 +83,7 @@ public class LogWindowController {
 		            }
 		        });
 
-
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println("Chat Window could not be created");
 				e.printStackTrace();
 				return;

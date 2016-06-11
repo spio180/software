@@ -1,11 +1,8 @@
 package chat_gui;
-import java.util.ArrayList;
-import java.util.List;
+
 import common.Const;
 import common.Message;
-import common.Serialization;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -20,38 +17,31 @@ public class ChatWindowController {
 	@FXML private TextField textToSend;
 	@FXML private ListView<String> userList;
 	@FXML public TabPane tabChat;
-	private String loggedUserName;
+	public static volatile String loggedUserName = "";
 	private TcpClient tcpConnectionToServer;
-	
-	public void SetMyUserName(String user_name) {
-		this.loggedUserName = user_name;
-	}
-	
-	public String GetMyUserName() {
-		return this.loggedUserName;
-	}
 
 	public void setTcpConnectionToServer(TcpClient connection){
 		tcpConnectionToServer = connection;
 	}
 
-	@FXML private void butWyczyszClick(){
+	@FXML private void butWyczyscClick(){
 		textToSend.clear();
 	}
 
 	@FXML private void butWyslijClick(){
 		String msg = textToSend.getText();
+		String msgFull = ChatWindowController.loggedUserName.concat(" - ").concat(msg);
 
 		if (msg.length() != 0)
 		{
 			Message message = new Message();
-			message.addLineToMessageBody(Const.BODY, textToSend.getText());
+			message.addLineToMessageBody(Const.BODY, msg);
 			message.setReceiver(Const.USER_ALL);
-			message.setSender(this.loggedUserName);
+			message.setSender(ChatWindowController.loggedUserName);
 			message.setType(Const.MSG_DO_WSZYSTKICH);
 			
 			tcpConnectionToServer.sendMessage(message);
-			tcpConnectionToServer.listOfCom.add(textToSend.getText());
+			tcpConnectionToServer.listOfCom.add(msgFull);
 			System.out.println(tcpConnectionToServer.listOfCom.size());
 			textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listOfCom));
 			textChat.scrollTo(tcpConnectionToServer.listOfCom.size()-1);

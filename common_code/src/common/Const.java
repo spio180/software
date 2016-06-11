@@ -8,4 +8,5 @@ public class Const {
 	public static String MSG_DO_WSZYSTKICH = "SEND_MSG_ALL";
 	public static String MSG_DO_UZYTKOWNIKA = "SEND_MSG_USER";
 	public static String MSG_LISTA_UZ = "USERS_LIST";	
+	public static String RECEIVER_SERVER = "####";	
 }

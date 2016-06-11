@@ -10,4 +10,8 @@ public class Const {
 	public static String MSG_LISTA_UZ = "USERS_LIST";	
 	public static String USER_SERVER = "####";	
 	public static String USER_ALL = "****";	
+	public static String LOGIN = "LOGIN";	
+	public static String LOGOUT = "LOGOUT";
+	public static String BODY = "MESSAGE_BODY";
+	public static String USER = "USER";
 }

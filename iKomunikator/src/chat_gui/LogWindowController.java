@@ -1,8 +1,5 @@
 package chat_gui;
-
 import java.io.IOException;
-import java.util.HashMap;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +8,11 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import common.Const;
 import common.Message;
-import common.Serialization;
 
 public class LogWindowController {
 	@FXML private Button butCancel;
@@ -27,7 +25,6 @@ public class LogWindowController {
 
 	@FXML private void closeButtonAction(){
 
-		/* Closing connection */
 		if (connectionToServer != null) {
 			connectionToServer.terminateListenningThread();
 			connectionToServer.closeSocket();
@@ -41,46 +38,37 @@ public class LogWindowController {
 	}
 
 	@FXML private void connectButtonAction() {
-
 		connectionToServer = new TcpClient();
 		butConnect.setDisable(true);
 
-
 		/*connection establishing */
-		int rc = connectionToServer.connectToServer(textClientIP.getText(),
-					Integer.parseInt(textClientPort.getText()));
-
+		int rc = connectionToServer.connectToServer(textClientIP.getText(),Integer.parseInt(textClientPort.getText()));
 
 		if (rc != 0) {
 			System.out.println("Cbutton");
 			butConnect.setDisable(true);
 			return;
 		}
-
-
-		/*sending logging message */
-		/*HashMap<String, String> loginPayload = new HashMap<String, String>();
-		loginPayload.put("LOGIN", userLogin.getText());
-		Message loginMessage = new Message("LOGIN_REQ", userLogin.getText(),
-				"##", loginPayload);
-		System.out.println(Serialization.SerializeMessage(loginMessage));
-		connectionToServer.sendMessage(Serialization.SerializeMessage(loginMessage));
-		*/
-
-		connectionToServer.sendMessage(userLogin.getText());
+		
+		Message loginMessage = new Message();
+		loginMessage.setType(Const.MSG_LOGOWANIE);
+		loginMessage.setReceiver(Const.USER_SERVER);
+		loginMessage.setSender(userLogin.getText());
+        loginMessage.addLineToMessageBody(Const.LOGIN, userLogin.getText());		
+		connectionToServer.sendMessage(loginMessage);
+		
 		/*verify answear from server */
 
-		if (true) { /*check nee to be implemented*/
+		if (true) { 
 			//Starting chat window
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatWindow.fxml"));
-			BorderPane chatWindow;
+			AnchorPane chatWindow;
 
 			try {
-
-				chatWindow = (BorderPane) loader.load();
+				chatWindow = (AnchorPane) loader.load();
 				Stage stageChat = new Stage();
 		        stageChat.setTitle("iKomunikator");
-		        stageChat.setScene(new Scene(chatWindow, 480, 820));
+		        stageChat.setScene(new Scene(chatWindow, 900, 600));
 		        stageChat.show();
 
 		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {

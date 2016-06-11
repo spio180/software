@@ -18,8 +18,10 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Logowanie");
-			TextField tf = (TextField) scene.lookup("#userIPTest");
-			tf.setText(TcpClient.getCurrentIPAddress());
+			TextField ipTextField = (TextField) scene.lookup("#userIPTest");
+			ipTextField.setText(TcpClient.getCurrentIPAddress());
+			TextField userLoginTextField = (TextField) scene.lookup("#userLogin");
+			userLoginTextField.requestFocus();
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

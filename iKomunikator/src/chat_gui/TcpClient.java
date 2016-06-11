@@ -12,36 +12,34 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import common.Const;
+import common.Message;
+import common.Serialization;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 
 public class TcpClient {
-
 	private InetAddress connectedAddress;
 	private int connectedPort = 0;
 	private Socket tcpSocket = null;
 	private BufferedReader inBuff;
 	private PrintWriter outPrint;
-
 	private Thread listennigThread;
 	private volatile boolean running = true;
-
 	public List<String> listOfCom = new ArrayList<>();
 	public ChatWindowController chatController = null;
-
 	public TcpClient() {
 
 	}
 
 	public static String getCurrentIPAddress() {
-
 		InetAddress localaddr;
 		try {
 			localaddr = InetAddress.getLocalHost();
 			System.out.println("Local Address : " + localaddr);
 			System.out.println("Local IP: " + localaddr.getHostAddress());
 			System.out.println("Local hostname   : " + localaddr.getHostName());
-
 			return localaddr.getHostAddress();
 
 		} catch (UnknownHostException e) {
@@ -49,7 +47,6 @@ public class TcpClient {
 			e.printStackTrace();
 			return "";
 		}
-
 	}
 
 	public int connectToServer(String host, int port) {
@@ -88,13 +85,16 @@ public class TcpClient {
 		return 0;
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(Message message) {
 		synchronized (this) {
 			if (!this.tcpSocket.isConnected()) {
 				System.out.println("No connection to server");
 				return;
 			}
-			this.outPrint.println(message);
+			
+			String serializedMessage = Serialization.SerializeMessage(message);
+			
+			this.outPrint.println(serializedMessage);
 			this.outPrint.flush();
 		}
 	}
@@ -144,11 +144,11 @@ public class TcpClient {
 
 						System.out.println(newLine);
 						listOfCom.add(newLine);
-
+						
 														// processing you want !
 						if (chatController != null) {
 							chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
-
+							
 						}
 					}
 

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
@@ -8,52 +11,97 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefHeight="788.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.ChatWindowController">
-   <center>
-      <TabPane prefHeight="663.0" prefWidth="471.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Wszyscy">
-            <content>
-              <AnchorPane minHeight="272.0" minWidth="200.0" prefHeight="544.0" prefWidth="471.0">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.ChatWindowController">
+   <children>
+      <SplitPane dividerPositions="0.17224080267558528" orientation="VERTICAL" prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="139.0" prefWidth="598.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Pane AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="463.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ListView fx:id="userList" layoutX="22.0" layoutY="40.0" prefHeight="200.0" prefWidth="429.0" />
-                        <TextArea fx:id="textToSend" layoutX="20.0" layoutY="532.0" prefHeight="102.0" prefWidth="431.0" wrapText="true" />
-                        <Button fx:id="butWyslij" defaultButton="true" layoutX="370.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#butWyslijClick" text="Wyślij" />
-                        <Button fx:id="butWyczysc" layoutX="296.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#butWyczyszClick" text="Wyczyść" />
-                        <Label layoutX="22.0" layoutY="14.0" text="Lista zalogowanych:">
+                        <Arc fill="DODGERBLUE" layoutX="70.0" layoutY="45.0" length="270.0" opacity="0.6" radiusX="33.0" radiusY="30.0" startAngle="45.0" stroke="#606a9e" strokeType="INSIDE" type="ROUND">
+                           <effect>
+                              <Reflection />
+                           </effect>
+                        </Arc>
+                        <Text fill="#8200ff" layoutX="96.0" layoutY="65.0" nodeOrientation="LEFT_TO_RIGHT" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="i">
+                           <effect>
+                              <Reflection />
+                           </effect>
                            <font>
-                              <Font size="14.0" />
+                              <Font size="20.0" />
                            </font>
-                        </Label>
-                        <Label layoutX="22.0" layoutY="253.0" text="Czat:">
+                        </Text>
+                        <Text fill="DODGERBLUE" fontSmoothingType="LCD" layoutX="101.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Komunikator" wrappingWidth="133.13671875">
+                           <effect>
+                              <Reflection />
+                           </effect>
                            <font>
-                              <Font size="14.0" />
+                              <Font size="20.0" />
                            </font>
-                        </Label>
-                        <ListView fx:id="textChat" layoutX="21.0" layoutY="276.0" prefHeight="247.0" prefWidth="429.0" />
+                        </Text>
                      </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </center>
-   <top>
-      <Pane prefHeight="79.0" prefWidth="471.0" BorderPane.alignment="CENTER">
-         <children>
-            <Arc fill="DODGERBLUE" layoutX="82.0" layoutY="35.0" length="270.0" opacity="0.6" radiusX="30.0" radiusY="33.0" startAngle="45.0" stroke="#606a9e" strokeType="INSIDE" type="ROUND" />
-            <Text fill="#8200ff" layoutX="109.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="i">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Text>
-            <Text fill="DODGERBLUE" fontSmoothingType="LCD" layoutX="113.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Komunikator">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
-   </top>
-</BorderPane>
+                  </Pane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <SplitPane dividerPositions="0.16666666666666666" layoutX="-1.0" layoutY="-2.0" prefHeight="501.0" prefWidth="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
+                    <items>
+                      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="162.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <ListView fx:id="userList" layoutX="-52.0" layoutY="155.0" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+                              <Label layoutX="9.0" layoutY="14.0" prefHeight="17.0" prefWidth="140.0" text="Lista użytkowników" AnchorPane.leftAnchor="9.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <SplitPane dividerPositions="0.803921568627451" orientation="VERTICAL" prefHeight="499.0" prefWidth="579.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0">
+                                       <children>
+                                          <TabPane layoutX="55.0" layoutY="72.0" prefHeight="397.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                            <tabs>
+                                              <Tab text="Wszyscy">
+                                                   <content>
+                                                      <ListView fx:id="textChat" prefHeight="368.0" prefWidth="602.0" />
+                                                   </content>
+                                              </Tab>
+                                            </tabs>
+                                          </TabPane>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane prefHeight="83.0" prefWidth="577.0" SplitPane.resizableWithParent="false">
+                                       <children>
+                                          <Button fx:id="butWyslij" layoutX="510.0" layoutY="55.0" mnemonicParsing="false" text="Wyślij" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0" />
+                                          <Button fx:id="butWyczysc" layoutX="430.0" layoutY="55.0" mnemonicParsing="false" text="Wyczyść" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="90.0" />
+                                          <TextField fx:id="textToSend" layoutX="43.0" layoutY="55.0" prefHeight="25.0" prefWidth="534.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
+                                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dee3e8" height="27.0" layoutX="8.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="30.0">
+                                             <effect>
+                                                <InnerShadow color="#141d9a45" height="23.72" radius="10.68" />
+                                             </effect>
+                                          </Rectangle>
+                                          <Text layoutX="16.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A">
+                                             <font>
+                                                <Font name="Cambria" size="25.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

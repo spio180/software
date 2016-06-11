@@ -106,6 +106,12 @@ public class TcpClient {
 
 	public void setChatController(ChatWindowController chat) {
 		chatController = chat;
+		
+		if (chatController != null) {
+			listOfCom.add("iKomunikator - WITAMY !");
+			chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
+		
+		}	
 	}
 	public void closeSocket() {
 		if (tcpSocket != null)
@@ -126,7 +132,7 @@ public class TcpClient {
 
 		@Override
 		public void run() {
-			/* waiting for thread start signal */
+			
 			while (!running)
 				try {
 					Thread.sleep(100);
@@ -173,7 +179,13 @@ public class TcpClient {
 			
 			System.out.println(message.toString());
 			ChatWindowController.loggedUserName=message.getReceiver();
-			System.out.println(ChatWindowController.loggedUserName);
+			String messageText = "Zalogowano na serwerze: " + ChatWindowController.loggedUserName;
+			listOfCom.add(messageText);		
+			
+			if (chatController != null) {
+				chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
+			
+			}			
 		}
 		
 		private void MessageDoWszystkich(Message message) {

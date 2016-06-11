@@ -1,5 +1,7 @@
 package chat_gui;
 import java.io.IOException;
+
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

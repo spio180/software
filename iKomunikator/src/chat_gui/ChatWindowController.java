@@ -38,7 +38,7 @@ public class ChatWindowController {
 			message.addLineToMessageBody(Const.BODY, msg);
 			message.setReceiver(Const.USER_ALL);
 			message.setSender(ChatWindowController.loggedUserName);
-			message.setType(Const.MSG_DO_WSZYSTKICH);
+			message.setType(Const.MSG_DO_UZYTKOWNIKA);
 			
 			tcpConnectionToServer.sendMessage(message);
 			tcpConnectionToServer.listOfCom.add(msgFull);

@@ -45,4 +45,8 @@ public class Message {
 		this.receiver = receiver;
 		this.messageBody = messagebody;
 	}
+	
+	public Message(){
+		
+	}
 }

@@ -15,7 +15,7 @@ public class ChatWindowController {
 	@FXML public Button butWyslij;
 	@FXML public ListView<String> textChat;
 	@FXML private TextField textToSend;
-	@FXML private ListView<String> userList;
+	@FXML public ListView<String> userList;
 	@FXML public TabPane tabChat;
 	public static volatile String loggedUserName = "";
 	private TcpClient tcpConnectionToServer;

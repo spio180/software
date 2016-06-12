@@ -1,7 +1,5 @@
 package chat_gui;
 import java.io.IOException;
-
-import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import common.Const;
 import common.Message;
@@ -40,7 +37,6 @@ public class LogWindowController {
 		connectionToServer = new TcpClient();
 		butConnect.setDisable(true);
 
-		/*connection establishing */
 		int rc = connectionToServer.connectToServer(textClientIP.getText(),Integer.parseInt(textClientPort.getText()));
 
 		if (rc != 0) {
@@ -55,11 +51,8 @@ public class LogWindowController {
 		loginMessage.setSender(userLogin.getText());
         loginMessage.addLineToMessageBody(Const.LOGIN, userLogin.getText());		
         connectionToServer.sendMessage(loginMessage);
-		
-		/*verify answear from server */
 
 		if (true) { 
-			//Starting chat window
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatWindow.fxml"));
 			AnchorPane chatWindow;
 
@@ -67,10 +60,11 @@ public class LogWindowController {
 				chatWindow = (AnchorPane) loader.load();
 				Stage stageChat = new Stage();
 		        stageChat.setTitle("iKomunikator");
-		        stageChat.setScene(new Scene(chatWindow, 900, 600));
-		        //TextField textToSend = (TextField) stageChat.lookup("textToSend");
+		        Scene sceneChat = new Scene(chatWindow, 900, 600);
+		        stageChat.setScene(sceneChat);
+		        //TextField textToSend = (TextField) sceneChat.lookup("textToSend");
 		        //textToSend.requestFocus();
-		        //Button butWyslij = (Button) chatWindow.lookup("butWyslij");
+		        //Button butWyslij = (Button) sceneChat.lookup("butWyslij");
 		        //butWyslij.setDefaultButton(true);
 		        stageChat.show();
 

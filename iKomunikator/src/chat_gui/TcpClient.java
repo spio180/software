@@ -1,5 +1,4 @@
 package chat_gui;
-import java.awt.Desktop.Action;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,12 +10,14 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.TreeMap;
 import common.Const;
 import common.Message;
 import common.Serialization;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class TcpClient {
 	private InetAddress connectedAddress;
@@ -56,8 +57,6 @@ public class TcpClient {
 			this.tcpSocket = new Socket(connectedAddress, connectedPort);
 			this.inBuff = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
 			this.outPrint = new PrintWriter(tcpSocket.getOutputStream());
-
-			/* Starting listenning thread */
 			listennigThread = new Thread(new TcpListeningThread());
 			
 			try {
@@ -109,8 +108,7 @@ public class TcpClient {
 		
 		if (chatController != null) {
 			listOfCom.add("iKomunikator - WITAMY !");
-			chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
-		
+			chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));		
 		}	
 	}
 	public void closeSocket() {
@@ -120,22 +118,19 @@ public class TcpClient {
 			} catch (IOException e) {
 				System.out.println("TCP socket could not be closed");
 				e.printStackTrace();
-
 			}
 	}
 
 	private class TcpListeningThread implements Runnable {
 
 		public TcpListeningThread() {
-			// Nothing to do...
 		}
 
 		@Override
-		public void run() {
-			
+		public void run() {			
 			while (!running)
 				try {
-					Thread.sleep(100);
+					Thread.sleep(50);
 				} catch (InterruptedException e1) {
 					System.out.println("Listenning thread could not be started - running not set");
 					e1.printStackTrace();
@@ -162,13 +157,19 @@ public class TcpClient {
 						}
 						
 						if (message.getType().equals(Const.MSG_LOGOWANIE_BLAD)) {
-							
-						}		
+							 Alert alert = new Alert(AlertType.ERROR);
+							 alert.setTitle("B³¹d");
+							 alert.setContentText("U¿ytkownik o tej nazwie ju¿ istnieje lub przekroczono dozwolon¹ liczbê u¿ytkowników.");
+							 alert.showAndWait();
+						}	
+						
+						if (message.getType().equals(Const.MSG_LISTA_UZ)) {
+							this.ListaUzytkownikow(message);
+						}							
 					}
 
 				} catch (IOException e) {
 					System.err.println("Connection problem");
-
 				}
 			}
 
@@ -183,8 +184,7 @@ public class TcpClient {
 			listOfCom.add(messageText);		
 			
 			if (chatController != null) {
-				chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
-			
+				chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));			
 			}			
 		}
 		
@@ -196,8 +196,22 @@ public class TcpClient {
 				listOfCom.add(messageText);			
 
 				if (chatController != null) {
-					chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));
-				
+					chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));				
+				}
+			}
+		}
+		
+		private void ListaUzytkownikow(Message message) {
+			if (message.getMessageBody().size()>0) {	
+				if (chatController != null) {
+					chatController.userList.getItems().clear();
+					Map<String, String> sortedUsers = new TreeMap<String, String>(message.getMessageBody());
+
+					for(String key : sortedUsers.keySet()){				    
+						String userName = sortedUsers.get(key);
+					
+						chatController.userList.getItems().add(userName);					
+					}		
 				}
 			}
 		}

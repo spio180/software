@@ -22,6 +22,8 @@ public class Main extends Application {
 			TextField ipTextField = (TextField) scene.lookup("#userIPTest");
 			ipTextField.setText(TcpClient.getCurrentIPAddress());
 			ipTextField.requestFocus();
+			//Button btnConnect = (Button)scene.lookup("butConnect");
+			//btnConnect.setDefaultButton(true);			
 			primaryStage.show();
 			
 		} catch(Exception e) {

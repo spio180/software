@@ -3,7 +3,6 @@ package chat_gui;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +21,6 @@ public class Main extends Application {
 			TextField ipTextField = (TextField) scene.lookup("#userIPTest");
 			ipTextField.setText(TcpClient.getCurrentIPAddress());
 			ipTextField.requestFocus();
-			//Button btnConnect = (Button)scene.lookup("butConnect");
-			//btnConnect.setDefaultButton(true);			
 			primaryStage.show();
 			
 		} catch(Exception e) {

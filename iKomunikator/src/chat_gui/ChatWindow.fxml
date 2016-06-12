@@ -52,7 +52,7 @@
                     <items>
                       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="162.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <ListView fx:id="userList" layoutX="-52.0" layoutY="155.0" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+                              <ListView onMouseClicked="#OnListaUzytkownikowMouseClick" fx:id="userList" layoutX="-52.0" layoutY="155.0" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
                               <Label layoutX="9.0" layoutY="14.0" prefHeight="17.0" prefWidth="140.0" text="Lista użytkowników" AnchorPane.leftAnchor="9.0" />
                            </children>
                         </AnchorPane>
@@ -62,7 +62,7 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0">
                                        <children>
-                                          <TabPane layoutX="55.0" layoutY="72.0" prefHeight="397.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                          <TabPane fx:id="tabChat" layoutX="55.0" layoutY="72.0" prefHeight="397.0" prefWidth="577.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                                             <tabs>
                                               <Tab text="Wszyscy">
                                                    <content>

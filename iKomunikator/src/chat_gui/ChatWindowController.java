@@ -1,5 +1,7 @@
 package chat_gui;
 
+import java.util.Objects;
+
 import common.Const;
 import common.Message;
 import javafx.collections.FXCollections;
@@ -9,56 +11,103 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class ChatWindowController {
-	@FXML private Button butWyczysc;
-	@FXML public Button butWyslij;
-	@FXML public ListView<String> textChat;
-	@FXML private TextField textToSend;
-	@FXML public ListView<String> userList;
-	@FXML public TabPane tabChat;
+	@FXML
+	private Button butWyczysc;
+	@FXML
+	public Button butWyslij;
+	@FXML
+	public ListView<String> textChat;
+	@FXML
+	private TextField textToSend;
+	@FXML
+	public ListView<String> userList;
+	@FXML
+	public TabPane tabChat;
 	public static volatile String loggedUserName = "";
 	private TcpClient tcpConnectionToServer;
 
-	public void setTcpConnectionToServer(TcpClient connection){
+	public void setTcpConnectionToServer(TcpClient connection) {
 		tcpConnectionToServer = connection;
 	}
 
-	@FXML private void butWyczyscClick(){
+	@FXML
+	private void butWyczyscClick() {
 		textToSend.clear();
 	}
 
-	@FXML private void butWyslijClick(){
-		String msg = textToSend.getText();
-		String msgFull = ChatWindowController.loggedUserName.concat(" - ").concat(msg);
-
-		if (msg.length() != 0)
-		{
-			Message message = new Message();
-			message.addLineToMessageBody(Const.BODY, msg);
-			message.setReceiver(Const.USER_ALL);
-			message.setSender(ChatWindowController.loggedUserName);
-			message.setType(Const.MSG_DO_UZYTKOWNIKA);
-			
-			tcpConnectionToServer.sendMessage(message);
-			tcpConnectionToServer.listOfCom.add(msgFull);
-			System.out.println(tcpConnectionToServer.listOfCom.size());
-			textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listOfCom));
-			textChat.scrollTo(tcpConnectionToServer.listOfCom.size()-1);
-			textToSend.clear();
-		}
-	}
-	
-	public Boolean ContainsTab(String title) {
-		Boolean result = false;
-		
-		for (Tab tab : this.tabChat.getTabs()) {
-			if (tab.getText().toUpperCase() == title.toUpperCase()) {
-				result = true;
+	@FXML
+	private void OnListaUzytkownikowMouseClick(MouseEvent event) {
+		if (this.tabChat != null) {
+			if (userList.getSelectionModel().getSelectedItem() != null) {
+				String uzytkownik = userList.getSelectionModel().getSelectedItem().toString();
+				
+				if (this.ContainsTab(uzytkownik)){
+					for (Tab tab : this.tabChat.getTabs()) {
+						if (Objects.equals(uzytkownik, tab.getText())) {
+							this.tabChat.getSelectionModel().select(tab);
+						}
+					}
+				}
+				else{
+					if (!Objects.equals(uzytkownik,loggedUserName)) {
+						ListView<String> listView = new ListView<String>();
+						listView.setId(uzytkownik.concat("_chat"));
+						String leadMessage = "Rozpocznij czat z " + uzytkownik;
+						listView.getItems().add(leadMessage);
+						Tab tab = new Tab();
+						tab.setText(uzytkownik);
+						tab.setClosable(true);
+						tab.setContent(listView);
+						this.tabChat.getTabs().add(tab);
+					}
+				}
+					
 			}
 		}
+	}
+
+	@FXML
+	private void butWyslijClick() {
+
+		String msg = loggedUserName.concat(" - ").concat(textToSend.getText());
 		
-		return result;
+
+		if (msg.length() != 0) {
+			Message message = new Message();
+			
+			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
+				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
+				Tab tab = this.tabChat.getTabs().get(selectedIndex);
+				
+				if (tab.getText() == "Wszyscy") {
+					message.setType(Const.MSG_DO_WSZYSTKICH);
+					message.setReceiver(tab.getText());
+				}
+				else {
+					message.setType(Const.MSG_DO_UZYTKOWNIKA);
+					message.setReceiver(Const.USER_ALL);
+				}
+				
+				message.addLineToMessageBody(Const.BODY, msg);			
+				message.setSender(ChatWindowController.loggedUserName);
+				tcpConnectionToServer.sendMessage(message);
+				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(msg);
+				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(tab.getText())));
+				textToSend.clear();
+			}
+		}
+	}
+
+	public Boolean ContainsTab(String title) {
+		for (Tab tab : this.tabChat.getTabs()) {
+			if (Objects.equals(tab.getText(),title)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
-

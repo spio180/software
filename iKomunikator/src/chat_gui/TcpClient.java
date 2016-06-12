@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -27,11 +28,12 @@ public class TcpClient {
 	private PrintWriter outPrint;
 	private Thread listennigThread;
 	private volatile boolean running = true;
-	public List<String> listOfCom = new ArrayList<>();
+	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
+	public List<String> listaUzytkownikow = new ArrayList<>();
 	public ChatWindowController chatController = null;
 	
 	public TcpClient() {
-
+		listaListChatow.put("Wszyscy", new ArrayList<>());
 	}
 
 	public static String getCurrentIPAddress() {
@@ -107,8 +109,8 @@ public class TcpClient {
 		chatController = chat;
 		
 		if (chatController != null) {
-			listOfCom.add("iKomunikator - WITAMY !");
-			chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));		
+			listaListChatow.get("Wszyscy").add("iKomunikator - WITAMY !");
+			chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));		
 		}	
 	}
 	public void closeSocket() {
@@ -149,8 +151,9 @@ public class TcpClient {
 						}
 						
 						if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
-							this.MessageDoWszystkich(message);
+							this.MessageDoUzytkownika(message);
 						}
+						
 						
 						if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
 							this.MessageDoWszystkich(message);
@@ -167,7 +170,7 @@ public class TcpClient {
 							this.ListaUzytkownikow(message);
 						}							
 					}
-
+					
 				} catch (IOException e) {
 					System.err.println("Connection problem");
 				}
@@ -177,15 +180,28 @@ public class TcpClient {
 		}
 		
 		private void LogowanieOK(Message message) {
-			
+			this.ListaUzytkownikow(message);
 			System.out.println(message.toString());
 			ChatWindowController.loggedUserName=message.getReceiver();
 			String messageText = "Zalogowano na serwerze: " + ChatWindowController.loggedUserName;
-			listOfCom.add(messageText);		
+			listaListChatow.get("Wszyscy").add(messageText);		
 			
 			if (chatController != null) {
-				chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));			
+				chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));	
 			}			
+		}
+		
+		private void MessageDoUzytkownika(Message message) {
+			if (message.getMessageBody().containsKey(Const.BODY)) {			
+				String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
+
+				System.out.println(messageText);
+				listaListChatow.get(message.getSender()).add(messageText);			
+
+				if (chatController != null) {
+					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get(message.getSender())));				
+				}
+			}
 		}
 		
 		private void MessageDoWszystkich(Message message) {
@@ -193,10 +209,10 @@ public class TcpClient {
 				String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
 
 				System.out.println(messageText);
-				listOfCom.add(messageText);			
+				listaListChatow.get("Wszyscy").add(messageText);	
 
 				if (chatController != null) {
-					chatController.textChat.setItems(FXCollections.observableArrayList(listOfCom));				
+					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));				
 				}
 			}
 		}
@@ -208,9 +224,8 @@ public class TcpClient {
 					Map<String, String> sortedUsers = new TreeMap<String, String>(message.getMessageBody());
 
 					for(String key : sortedUsers.keySet()){				    
-						String userName = sortedUsers.get(key);
-					
-						chatController.userList.getItems().add(userName);					
+						String userName = sortedUsers.get(key);					
+						chatController.userList.getItems().add(userName);	
 					}		
 				}
 			}

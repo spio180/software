@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import common.Const;
@@ -33,6 +34,7 @@ public class LogWindowController {
 	    stage.close();
 	}
 
+
 	@FXML private void connectButtonAction() {
 		connectionToServer = new TcpClient();
 		butConnect.setDisable(true);
@@ -50,7 +52,7 @@ public class LogWindowController {
 		loginMessage.setReceiver(Const.USER_SERVER);
 		loginMessage.setSender(userLogin.getText());
         loginMessage.addLineToMessageBody(Const.LOGIN, userLogin.getText());		
-        connectionToServer.sendMessage(loginMessage);
+        
 
 		if (true) { 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatWindow.fxml"));
@@ -62,10 +64,6 @@ public class LogWindowController {
 		        stageChat.setTitle("iKomunikator");
 		        Scene sceneChat = new Scene(chatWindow, 900, 600);
 		        stageChat.setScene(sceneChat);
-		        //TextField textToSend = (TextField) sceneChat.lookup("textToSend");
-		        //textToSend.requestFocus();
-		        //Button butWyslij = (Button) sceneChat.lookup("butWyslij");
-		        //butWyslij.setDefaultButton(true);
 		        stageChat.show();
 
 		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -85,16 +83,14 @@ public class LogWindowController {
 				return;
 			}
 
-			//setting TCP connection for ChatWindow
 			ChatWindowController chatController = (ChatWindowController) loader.getController();
 			chatController.setTcpConnectionToServer(connectionToServer);
 			connectionToServer.setChatController(chatController);
-
-			// get a handle to the stage
+			
+			connectionToServer.sendMessage(loginMessage);
+			
 		    Stage stage = (Stage) butConnect.getScene().getWindow();
-
 		    butConnect.setDisable(true);
-		    // do what you have to do
 		    stage.hide();
 		}
 

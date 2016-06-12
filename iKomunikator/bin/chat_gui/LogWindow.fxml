@@ -15,7 +15,7 @@
    <top>
       <Pane fx:id="tcpClientPort" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="280.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="butConnect" blendMode="SRC_ATOP" contentDisplay="TOP" graphicTextGap="5.0" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Zaloguj" />
+            <Button defaultButton="true" fx:id="butConnect" blendMode="SRC_ATOP" contentDisplay="TOP" graphicTextGap="5.0" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Zaloguj" />
             <Button fx:id="butCancel" blendMode="SRC_ATOP" layoutX="160.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />
             <Arc fill="DODGERBLUE" layoutX="90.0" layoutY="45.0" length="270.0" opacity="0.6" radiusX="33.0" radiusY="30.0" startAngle="45.0" stroke="#606a9e" strokeType="INSIDE" type="ROUND">
                <effect>

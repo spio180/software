@@ -77,7 +77,7 @@
                                        <children>
                                           <Button fx:id="butWyslij" layoutX="510.0" layoutY="55.0" mnemonicParsing="false" text="Wyślij" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0"  onMouseClicked="#butWyslijClick"  />
                                           <Button fx:id="butWyczysc" layoutX="430.0" layoutY="55.0" mnemonicParsing="false" text="Wyczyść" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="90.0" onMouseClicked="#butWyczyscClick" />
-                                          <TextField fx:id="textToSend" layoutX="43.0" layoutY="55.0" prefHeight="25.0" prefWidth="534.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
+                                          <TextField fx:id="textToSend" layoutX="43.0" layoutY="55.0" prefHeight="25.0" prefWidth="534.0" onKeyPressed="#handleEnterPressed" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dee3e8" height="27.0" layoutX="8.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="30.0">
                                              <effect>
                                                 <InnerShadow color="#141d9a45" height="23.72" radius="10.68" />

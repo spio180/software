@@ -11,6 +11,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class ChatWindowController {
@@ -69,6 +71,7 @@ public class ChatWindowController {
 		}
 	}
 
+	/*
 	@FXML
 	private void butWyslijClick() {
 
@@ -90,7 +93,7 @@ public class ChatWindowController {
 					message.setType(Const.MSG_DO_UZYTKOWNIKA);
 					message.setReceiver(Const.USER_ALL);
 				}
-				
+				message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
 				message.addLineToMessageBody(Const.BODY, msg);			
 				message.setSender(ChatWindowController.loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
@@ -100,7 +103,51 @@ public class ChatWindowController {
 			}
 		}
 	}
+*/
+	
+	@FXML private void butWyslijClick(){
+        wyslijWiadomosc();
+    }
 
+    private void wyslijWiadomosc() {
+
+		String msg = textToSend.getText();
+		
+
+		if (msg.length() != 0) {
+			Message message = new Message();
+			
+			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
+				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
+				Tab tab = this.tabChat.getTabs().get(selectedIndex);
+				
+				if (tab.getText() == "Wszyscy") {
+					message.setType(Const.MSG_DO_WSZYSTKICH);
+					message.setReceiver(tab.getText());
+				}
+				else {
+					message.setType(Const.MSG_DO_UZYTKOWNIKA);
+					message.setReceiver(Const.USER_ALL);
+				}
+				message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
+				message.addLineToMessageBody(Const.BODY, msg);			
+				message.setSender(ChatWindowController.loggedUserName);
+				tcpConnectionToServer.sendMessage(message);
+				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(msg);
+				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(tab.getText())));
+				textToSend.clear();
+			}
+		}
+    }
+    
+    
+    @FXML public void handleEnterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            wyslijWiadomosc();
+        }
+    }	
+	
+	
 	public Boolean ContainsTab(String title) {
 		for (Tab tab : this.tabChat.getTabs()) {
 			if (Objects.equals(tab.getText(),title)) {

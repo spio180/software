@@ -133,7 +133,7 @@ public class ChatWindowController {
 				message.addLineToMessageBody(Const.BODY, msg);			
 				message.setSender(ChatWindowController.loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
-				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(msg);
+				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(loggedUserName.concat(" - ").concat(msg));
 				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(tab.getText())));
 				textToSend.clear();
 			}

@@ -2,13 +2,13 @@ package common;
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class Message implements Serializable {	
+public class Message implements Serializable {
 	private static final long serialVersionUID = 3053534860334056800L;
 	private String type;
 	private String sender;
 	private String receiver;
 	private HashMap<String,String> messageBody = new HashMap<String,String>();
-	
+
 	public String getType() {
 		return type;
 	}
@@ -40,8 +40,8 @@ public class Message implements Serializable {
 	public void setMessageBody(HashMap<String,String> messageBody) {
 		this.messageBody = messageBody;
 	}
-	
-	public void addLineToMessageBody(String key, String value) {	
+
+	public void addLineToMessageBody(String key, String value) {
 		this.messageBody.put(key,value);
 	}
 
@@ -50,8 +50,10 @@ public class Message implements Serializable {
 	}
 
 	public Message() {
+		this.type = Const.MSG_NOT_DEFINED;
+
 	}
-	
+
 	public Message(String type, String sender, String receiver, HashMap<String,String> messagebody){
 		this.type = type;
 		this.sender = sender;

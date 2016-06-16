@@ -23,80 +23,80 @@ import org.xml.sax.SAXException;
 public class Serialization {
    public static Boolean SerializeServerConfig(ServerConfig config_to_serialize, String config_file_path) {
 	   Boolean result = false;
-   
+
 	   try {
 		   DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
-		   DocumentBuilder documentBuilder= documentBuilderFactory.newDocumentBuilder();           
-		   Document document= documentBuilder.newDocument();           
+		   DocumentBuilder documentBuilder= documentBuilderFactory.newDocumentBuilder();
+		   Document document= documentBuilder.newDocument();
 		   Element element= document.createElement("ServerConfig");
-		   document.appendChild(element);    
+		   document.appendChild(element);
 
 		   Element ip = document.createElement("IP");
 		   ip.appendChild(document.createTextNode(config_to_serialize.IP.toString()));
 		   element.appendChild(ip);
-   
+
 		   Element port = document.createElement("ServerPort");
 		   port.appendChild(document.createTextNode(Integer.toString(config_to_serialize.ServerPort)));
 		   element.appendChild(port);
-   
+
 		   Element connectionLimit = document.createElement("ConnectionsLimit");
            connectionLimit.appendChild(document.createTextNode(Integer.toString(config_to_serialize.ConnectionsLimit)));
            element.appendChild(connectionLimit);
-                      
+
            TransformerFactory transformerFactory= TransformerFactory.newInstance();
            Transformer transformer= transformerFactory.newTransformer();
            DOMSource source = new DOMSource(document);
-           
+
            StreamResult streamResult = new StreamResult(new File(config_file_path));
            transformer.transform(source, streamResult);
         }
         catch(Exception ex) {
         	Log.WriteToLog(ex.getMessage());
         }
-       
-        return result;   
-    }	
-	
+
+        return result;
+    }
+
    public static Boolean DeserializeServerConfig(String config_file_path, ServerConfig configuration) throws UnknownHostException, ParserConfigurationException, SAXException {
 	   Boolean result = false;
 	   configuration = new ServerConfig();
-	   
+
 	   try
 	   {
 		   DocumentBuilderFactory documentBuilderFactory= DocumentBuilderFactory.newInstance();
-		   DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder(); 		   
+		   DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		   Document document = documentBuilder.parse(config_file_path);
-		   
+
 		   NodeList ipNodeList = document.getElementsByTagName("IP");
 		   for (int i=0; i< ipNodeList.getLength(); i++) {
 			   Node node = ipNodeList.item(i);
-			   
+
 			   if (node.getNodeType() == Node.ELEMENT_NODE) {
 				   Element element = (Element) node;
 				   configuration.IP = element.getNodeValue();
 			   }
 		   }
-		   
+
 		   NodeList serverPortNodeList = document.getElementsByTagName("SERVERPORT");
 		   for (int i=0; i< serverPortNodeList.getLength(); i++) {
 			   Node node = serverPortNodeList.item(i);
-			   
+
 			   if (node.getNodeType() == Node.ELEMENT_NODE) {
 				   Element element = (Element) node;
 				   configuration.ServerPort = Integer.parseInt(element.getNodeValue());
 			   }
-		   }		
-		   
+		   }
+
 		   NodeList connectionsLimitNodeList = document.getElementsByTagName("CONNECTIONSLIMIT");
 		   for (int i=0; i< connectionsLimitNodeList.getLength(); i++) {
 			   Node node = connectionsLimitNodeList.item(i);
-			   
+
 			   if (node.getNodeType() == Node.ELEMENT_NODE) {
 				   Element element = (Element) node;
 				   configuration.ConnectionsLimit = Integer.parseInt(element.getNodeValue());
 			   }
-		   }	
-		   
+		   }
+
 		   result = true;
 	   }
 	   catch(IOException ex) {
@@ -105,7 +105,7 @@ public class Serialization {
 
 	   return result;
     }
-   
+
    public static String SerializeMessage(Message msg) {
 	   String result;
 	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -119,16 +119,21 @@ public class Serialization {
    }
 
    public static Message DeSerializeMessage(String msg) {
+
+	   if (msg.length() < 2)
+		   return null;
 	   Message result = new Message();
 	   InputStream stream = new ByteArrayInputStream(msg.getBytes());
 	   XMLDecoder decoder;
 
 	   try {
-	   decoder = new XMLDecoder(stream);
-	   result = (Message)decoder.readObject();
+		   System.out.println(">>>>DeSerializeMessage: Decoding message");
+		   decoder = new XMLDecoder(stream);
+		   result = (Message)decoder.readObject();
 	   } catch (Exception ex) {
-	   System.out.println(ex.getMessage());
-	   ex.printStackTrace();
+		   System.out.println("Error during desarialization");
+		   //ex.printStackTrace();
+		   return null;
 	   }
 
 	   return result;

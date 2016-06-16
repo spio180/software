@@ -31,7 +31,7 @@ public class TcpClient {
 	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
 	public List<String> listaUzytkownikow = new ArrayList<>();
 	public ChatWindowController chatController = null;
-	
+
 	public TcpClient() {
 		listaListChatow.put("Wszyscy", new ArrayList<>());
 	}
@@ -59,16 +59,7 @@ public class TcpClient {
 			this.tcpSocket = new Socket(connectedAddress, connectedPort);
 			this.inBuff = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
 			this.outPrint = new PrintWriter(tcpSocket.getOutputStream());
-			listennigThread = new Thread(new TcpListeningThread());
-			
-			try {
-				listennigThread.join();
-			} catch (InterruptedException e) {
-				System.out.println("Listenning thread could not be joined");
-				e.printStackTrace();
-			}
-			listennigThread.start();
-			running = true;
+
 
 		} catch (SocketException e) {
 			System.out.println("Socket Exception occured");
@@ -87,13 +78,50 @@ public class TcpClient {
 		return 0;
 	}
 
+	public Message getMsgFromInBuff() {
+
+		if (inBuff!=null)
+			try {
+				 if (inBuff.ready()) {
+					String serializedMessage = inBuff.readLine();
+					System.out.println("Received msg: " + serializedMessage);
+					System.out.println("Received msg length: " + Integer.toString(serializedMessage.length()));
+					if (serializedMessage.length() < 2)
+						return null;
+					else
+						return Serialization.DeSerializeMessage(serializedMessage);
+				 }
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.err.println("Connection problem");
+				return null;
+			}
+		return null;
+
+	}
+
+	public int startListennigThread() {
+		listennigThread = new Thread(new TcpListeningThread());
+
+		try {
+			listennigThread.join();
+		} catch (InterruptedException e) {
+			System.out.println("Listenning thread could not be joined");
+			e.printStackTrace();
+			return -1;
+		}
+		listennigThread.start();
+		running = true;
+		return 0;
+	}
+
 	public void sendMessage(Message message) {
 		synchronized (this) {
 			if (!this.tcpSocket.isConnected()) {
 				System.out.println("No connection to server");
 				return;
 			}
-			
+
 			String serializedMessage = Serialization.SerializeMessage(message);
 			System.out.println(serializedMessage);
 			this.outPrint.println(serializedMessage);
@@ -107,11 +135,11 @@ public class TcpClient {
 
 	public void setChatController(ChatWindowController chat) {
 		chatController = chat;
-		
+
 		if (chatController != null) {
 			listaListChatow.get("Wszyscy").add("iKomunikator - WITAMY !");
-			chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));		
-		}	
+			chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));
+		}
 	}
 	public void closeSocket() {
 		if (tcpSocket != null)
@@ -129,7 +157,7 @@ public class TcpClient {
 		}
 
 		@Override
-		public void run() {			
+		public void run() {
 			while (!running)
 				try {
 					Thread.sleep(50);
@@ -145,32 +173,32 @@ public class TcpClient {
 						String serializedMessage = inBuff.readLine();
 						System.out.println(serializedMessage);
 						Message message = Serialization.DeSerializeMessage(serializedMessage);
-						
+
 						if (message.getType().equals(Const.MSG_LOGOWANIE_OK)) {
 							this.LogowanieOK(message);
 						}
-						
+
 						if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
 							this.MessageDoUzytkownika(message);
 						}
-						
-						
+
+
 						if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
 							this.MessageDoWszystkich(message);
 						}
-						
+
 						if (message.getType().equals(Const.MSG_LOGOWANIE_BLAD)) {
 							 Alert alert = new Alert(AlertType.ERROR);
 							 alert.setTitle("B³¹d");
 							 alert.setContentText("U¿ytkownik o tej nazwie ju¿ istnieje lub przekroczono dozwolon¹ liczbê u¿ytkowników.");
 							 alert.showAndWait();
-						}	
-						
+						}
+
 						if (message.getType().equals(Const.MSG_LISTA_UZ)) {
 							this.ListaUzytkownikow(message);
-						}							
+						}
 					}
-					
+
 				} catch (IOException e) {
 					System.err.println("Connection problem");
 				}
@@ -178,55 +206,55 @@ public class TcpClient {
 
 			System.out.println("Listenning thread stopped");
 		}
-		
+
 		private void LogowanieOK(Message message) {
 			this.ListaUzytkownikow(message);
 			System.out.println(message.toString());
 			ChatWindowController.loggedUserName=message.getReceiver();
 			String messageText = "Zalogowano na serwerze: " + ChatWindowController.loggedUserName;
-			listaListChatow.get("Wszyscy").add(messageText);		
-			
+			listaListChatow.get("Wszyscy").add(messageText);
+
 			if (chatController != null) {
-				chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));	
-			}			
+				chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));
+			}
 		}
-		
+
 		private void MessageDoUzytkownika(Message message) {
-			if (message.getMessageBody().containsKey(Const.BODY)) {			
+			if (message.getMessageBody().containsKey(Const.BODY)) {
 				String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
 
 				System.out.println(messageText);
-				listaListChatow.get(message.getSender()).add(messageText);			
+				listaListChatow.get(message.getSender()).add(messageText);
 
 				if (chatController != null) {
-					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get(message.getSender())));				
+					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get(message.getSender())));
 				}
 			}
 		}
-		
+
 		private void MessageDoWszystkich(Message message) {
-			if (message.getMessageBody().containsKey(Const.BODY)) {			
+			if (message.getMessageBody().containsKey(Const.BODY)) {
 				String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
 
 				System.out.println(messageText);
-				listaListChatow.get("Wszyscy").add(messageText);	
+				listaListChatow.get("Wszyscy").add(messageText);
 
 				if (chatController != null) {
-					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));				
+					chatController.textChat.setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));
 				}
 			}
 		}
-		
+
 		private void ListaUzytkownikow(Message message) {
-			if (message.getMessageBody().size()>0) {	
+			if (message.getMessageBody().size()>0) {
 				if (chatController != null) {
 					chatController.userList.getItems().clear();
 					Map<String, String> sortedUsers = new TreeMap<String, String>(message.getMessageBody());
 
-					for(String key : sortedUsers.keySet()){				    
-						String userName = sortedUsers.get(key);					
-						chatController.userList.getItems().add(userName);	
-					}		
+					for(String key : sortedUsers.keySet()){
+						String userName = sortedUsers.get(key);
+						chatController.userList.getItems().add(userName);
+					}
 				}
 			}
 		}

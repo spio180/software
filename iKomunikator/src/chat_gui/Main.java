@@ -14,7 +14,7 @@ public class Main extends Application {
 		try {
 			
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("LogWindow.fxml"));
-			Scene scene = new Scene(root,280,400);
+			Scene scene = new Scene(root,280,360);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

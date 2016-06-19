@@ -40,9 +40,9 @@
                   <Reflection />
                </effect>
             </Text>
-            <Label layoutX="60.0" layoutY="115.0" text="IP" />
+            <Label layoutX="60.0" layoutY="115.0" text="Adres IP serwera" />
             <TextField id="userIPTest" fx:id="textClientIP" layoutX="60.0" layoutY="135.0" prefHeight="25.0" prefWidth="175.0" />
-            <Label layoutX="60.0" layoutY="175.0" text="Port" />
+            <Label layoutX="60.0" layoutY="175.0" text="Port serwera" />
             <TextField fx:id="textClientPort" layoutX="60.0" layoutY="195.0" prefHeight="25.0" prefWidth="175.0" text="10001" />
             <Label layoutX="60.0" layoutY="245.0" prefHeight="17.0" prefWidth="112.0" text="Nazwa użytkownika" />
             <TextField fx:id="textUserLogin" blendMode="SRC_ATOP" layoutX="60.0" layoutY="265.0" prefHeight="25.0" prefWidth="175.0" />            

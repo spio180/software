@@ -108,7 +108,7 @@ public class LogWindowController {
 			        		    			logoutMessage.setType(Const.MSG_WYLOGOWANIE);
 			        		    			logoutMessage.setReceiver(Const.USER_SERVER);
 			        		    			logoutMessage.setSender(chatController.getLoggedUserName());
-			        		    	        logoutMessage.addLineToMessageBody(Const.LOGIN, chatController.getLoggedUserName());
+			        		    	        logoutMessage.addLineToMessageBody(Const.LOGOUT, chatController.getLoggedUserName());
 
 			        		    	        connectionToServer.sendMessage(logoutMessage);
 

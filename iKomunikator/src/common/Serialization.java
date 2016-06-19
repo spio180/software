@@ -1,6 +1,5 @@
 package common;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.beans.XMLDecoder;
@@ -121,15 +120,15 @@ public class Serialization {
 
    public static Message DeSerializeMessage(String msg) throws UnsupportedEncodingException {
 	   Message result = new Message();
-	   InputStream stream = new ByteArrayInputStream(msg.getBytes("UTF-8"));
+	   ByteArrayInputStream stream = new ByteArrayInputStream(msg.getBytes("UTF-8"));
 	   XMLDecoder decoder;
 
 	   try {
-	   decoder = new XMLDecoder(stream);
-	   result = (Message)decoder.readObject();
+		   decoder = new XMLDecoder(stream);
+		   result = (Message)decoder.readObject();
 	   } catch (Exception ex) {
-	   System.out.println(ex.getMessage());
-	   ex.printStackTrace();
+		   System.out.println(ex.getMessage());
+		   ex.printStackTrace();
 	   }
 
 	   return result;

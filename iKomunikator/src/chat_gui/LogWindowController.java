@@ -16,6 +16,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import common.Const;
@@ -44,6 +46,13 @@ public class LogWindowController {
 	    stage.close();
 	}
 
+
+	@FXML private void OnKeyPressedEnter(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			connectButtonAction();
+		}
+
+	}
 
 	@FXML private void connectButtonAction() {
 
@@ -316,7 +325,7 @@ public class LogWindowController {
 	        	System.out.println("LoginThread: Timeout during waiting for LOGIN_OK");
 	        	loginStateProperty.set(LoginStates.TIMEOUT);
 	        }
-	        
+
 	    	System.out.println(">>>>LoginThread: closed");
 	    }
 	  }

@@ -44,7 +44,7 @@ public class TcpClient {
 	private TcpListeningThread tcpListennigThread;
 	private volatile boolean running = true;
 	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
-	public List<String> listaUzytkownikow = new ArrayList<>();
+	//public List<String> listaUzytkownikow = new ArrayList<>();
 	public ChatWindowController chatController = null;
 
 

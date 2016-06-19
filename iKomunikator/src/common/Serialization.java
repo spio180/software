@@ -1,6 +1,7 @@
 package common;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -106,7 +107,7 @@ public class Serialization {
 	   return result;
     }
    
-   public static String SerializeMessage(Message msg) {
+   public static String SerializeMessage(Message msg) throws UnsupportedEncodingException {
 	   String result;
 	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	   XMLEncoder xmlEncoder = new XMLEncoder(baos);

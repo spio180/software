@@ -128,9 +128,21 @@ public class ChatWindowController {
 			}
 		}
 	}
+	
+	   
+   private String ConvertUnacceptableCharacters(String in) {      
+	    if (in == null || ("".equals(in))) return null;
+	    StringBuffer out = new StringBuffer(in);
+	    for (int i = 0; i < out.length(); i++) {
+	        if(out.charAt(i) == 0x1a) {
+	            out.setCharAt(i, '-');
+	        }
+	    }
+	    return out.toString();
+	}
 
     private void wyslijWiadomosc() throws UnsupportedEncodingException {
-		String msg = textToSend.getText();
+		String msg = this.ConvertUnacceptableCharacters(textToSend.getText());
 
 		if (msg.length() != 0) {
 			if (WiadomoscZawieraNiedozwoloneWyrazenie()) {

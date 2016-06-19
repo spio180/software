@@ -31,9 +31,7 @@ public class LogWindowController {
 	@FXML private TextField textUserLogin;
 	@FXML private Pane tcpClientPort;
 	@FXML private TextField textClientPort;
-
 	private TcpClient connectionToServer = null;
-
 
 	@FXML private void closeButtonAction(){
 		if (connectionToServer != null) {
@@ -45,7 +43,6 @@ public class LogWindowController {
 		Stage stage = (Stage) butCancel.getScene().getWindow();
 	    stage.close();
 	}
-
 
 	@FXML private void OnKeyPressedEnter(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
@@ -114,16 +111,13 @@ public class LogWindowController {
 		        		                System.out.println("Stage is closing");
 
 		        		                if (connectionToServer != null) {
-
 		        		                	System.out.println("Sending logout message to Server");
 		        		                	Message logoutMessage = new Message();
 			        		    			logoutMessage.setType(Const.MSG_WYLOGOWANIE);
 			        		    			logoutMessage.setReceiver(Const.USER_SERVER);
 			        		    			logoutMessage.setSender(chatController.getLoggedUserName());
 			        		    	        logoutMessage.addLineToMessageBody(Const.LOGOUT, chatController.getLoggedUserName());
-
 			        		    	        connectionToServer.sendMessage(logoutMessage);
-
 		        		        			chatController.terminateListenningThread();
 		        		        			connectionToServer.closeSocket();
 		        		        			System.out.println("Connection to server closed");
@@ -132,6 +126,8 @@ public class LogWindowController {
 		        		        });
 
 		        		        stageChat.show();
+		        				TextField textToSend = (TextField) sceneChat.lookup("#textToSend");
+		        				textToSend.requestFocus();
 		        		        
 		        			} catch (IOException e) {
 		        				// TODO Auto-generated catch block

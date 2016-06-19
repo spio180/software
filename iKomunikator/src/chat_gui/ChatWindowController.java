@@ -133,7 +133,6 @@ public class ChatWindowController {
 
 		String msg = textToSend.getText();
 
-
 		if (msg.length() != 0) {
 			Message message = new Message();
 

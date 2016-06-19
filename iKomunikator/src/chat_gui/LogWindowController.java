@@ -182,7 +182,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Adres IP serwera jest niepoprawny [0-255].[0-255].[0-255].[0-255] !");
+			alert.setContentText("Adres IP serwera jest niepoprawny !\nPoprawny adres to: [0-255].[0-255].[0-255].[0-255] !");
 			alert.showAndWait();
 			this.textClientIP.requestFocus();
 		}
@@ -191,7 +191,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Podaj numer portu serwera !");
+			alert.setContentText("Podaj numer portu serwera [0-65535] !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -200,7 +200,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -209,7 +209,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -218,7 +218,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}

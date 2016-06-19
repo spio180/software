@@ -123,7 +123,6 @@ public class ChatWindowController {
 						this.tabChat.getTabs().add(tab);
 					}
 				}
-
 			}
 		}
 	}

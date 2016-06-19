@@ -245,7 +245,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawna nazwa u¿ytkownika !\nDozwolone znaki to: litery, cydry oraz znak podkreœlenia [_].");
+			alert.setContentText("Niepoprawna nazwa u¿ytkownika !\nDozwolone znaki to: litery, cyfry oraz znak podkreœlenia [_].");
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}

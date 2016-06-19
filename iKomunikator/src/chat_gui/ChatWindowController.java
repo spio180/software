@@ -1,6 +1,8 @@
 package chat_gui;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -59,6 +61,7 @@ public class ChatWindowController {
 
 	//List of users
 	Map<String, String> sortedUsers;
+	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
 
 	public ListenningThread2 listenningThread;
 
@@ -158,9 +161,13 @@ public class ChatWindowController {
 
 			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
 				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
+				
+				System.out.println("Selected tab index: " +Integer.toString(selectedIndex));
 				Tab tab = this.tabChat.getTabs().get(selectedIndex);
 
-				if (tab.getText() == "Wszyscy") {
+				String currentTabName = tab.getText();
+
+				if (currentTabName == "Wszyscy") {
 					message.setType(Const.MSG_DO_WSZYSTKICH);
 					message.setReceiver(tab.getText());
 				}
@@ -172,8 +179,8 @@ public class ChatWindowController {
 				message.addLineToMessageBody(Const.BODY, msg);
 				message.setSender(loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
-				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(loggedUserName.concat(" - ").concat(msg));
-				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(tab.getText())));
+				this.listaListChatow.get(currentTabName).add(loggedUserName.concat(" - ").concat(msg));
+				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(currentTabName)));
 				textToSend.clear();
 			}
 		}
@@ -233,7 +240,7 @@ public class ChatWindowController {
 		    });
 
 		//Listener for User List Update
-		listenningThread.getReceivedMessageProperty().addListener(new ChangeListener<Number>() {
+		listenningThread.getReceivedMessageAllProperty().addListener(new ChangeListener<Number>() {
 		      @Override
 		      public void changed(final ObservableValue<? extends Number> observable,
 		          final Number oldValue, final Number newValue) {
@@ -243,7 +250,7 @@ public class ChatWindowController {
 		            public void run() {
 
 
-		            	System.out.println("Message received");
+		            	System.out.println("Message for all received");
 
 		            }
 		          });
@@ -259,12 +266,12 @@ public class ChatWindowController {
 	public class ListenningThread2 extends Thread {
 
 		private IntegerProperty receivedUserListProperty;
-		private IntegerProperty receivedMessageProperty;
+		private IntegerProperty receivedMessageAll;
 
 
 		public ListenningThread2() {
 		      receivedUserListProperty = new SimpleIntegerProperty(this, "int", 0);
-		      receivedMessageProperty = new SimpleIntegerProperty(this, "int", 0);
+		      receivedMessageAll = new SimpleIntegerProperty(this, "int", 0);
 		      setDaemon(true);
 		}
 
@@ -276,12 +283,12 @@ public class ChatWindowController {
 		      return receivedUserListProperty;
 		}
 
-		public int getReceivedMessagePropertyInt() {
-		      return receivedMessageProperty.get();
+		public int getReceivedMessageAllPropertyInt() {
+		      return receivedMessageAll.get();
 		}
 
-		public IntegerProperty getReceivedMessageProperty() {
-		      return receivedMessageProperty;
+		public IntegerProperty getReceivedMessageAllProperty() {
+		      return receivedMessageAll;
 		}
 
 	 	@Override
@@ -301,17 +308,18 @@ public class ChatWindowController {
 	        			if (message.getMessageBody().size() > 0) {
 	        				sortedUsers = new TreeMap<String, String>(message.getMessageBody());
 	        				receivedUserListProperty.set(receivedUserListProperty.get() + 1);
+	        				System.out.println("User list received");
 
 	        			}
 					}
 
 	        		if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
-	        			receivedMessageProperty.set(receivedUserListProperty.get() + 1);
+	        			//receivedMessageAll.set(receivedUserListProperty.get() + 1);
 					}
 
 
 					if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
-						receivedMessageProperty.set(receivedUserListProperty.get() + 1);
+						receivedMessageAll.set(receivedUserListProperty.get() + 1);
 					}
 	        	}
 	    	}

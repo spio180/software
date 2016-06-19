@@ -1,13 +1,13 @@
 package chat_gui;
 
-import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import common.Const;
-import common.LoginStates;
 import common.Message;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -15,23 +15,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+
 
 public class ChatWindowController {
 
@@ -40,7 +35,11 @@ public class ChatWindowController {
 	private TcpClient tcpConnectionToServer;
 	private String loggedUserName;
 	private Map<String, String> sortedUsers;
-	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
+
+	private HashMap<String, List<String>> listaListChatow;
+	private HashMap<String, ListView<String>> listaListView;
+	//private HashMap<String, Tab> listaTab;
+
 
 	@FXML
 	private Button butWyczysc;
@@ -112,15 +111,25 @@ public class ChatWindowController {
 				}
 				else{
 					if (!Objects.equals(uzytkownik,loggedUserName)) {
-						ListView<String> listView = new ListView<String>();
-						listView.setId(uzytkownik.concat("_chat"));
-						String leadMessage = "Rozpocznij czat z " + uzytkownik;
-						listView.getItems().add(leadMessage);
+
+						//Adding new listview and list of text
+						listaListChatow.put(uzytkownik, new ArrayList<>());
+						listaListChatow.get(uzytkownik).add("Rozpocznij czat z " + uzytkownik);
+
+
+						listaListView.put(uzytkownik, new ListView<String>());
+						ListView<String> currentlistView = listaListView.get(uzytkownik);
+
+						currentlistView.setId(uzytkownik.concat("_chat"));
+						currentlistView.setItems(FXCollections.observableArrayList(listaListChatow.get(uzytkownik)));
+
 						Tab tab = new Tab();
 						tab.setText(uzytkownik);
 						tab.setClosable(true);
-						tab.setContent(listView);
+						tab.setContent(currentlistView);
 						this.tabChat.getTabs().add(tab);
+
+
 					}
 				}
 			}
@@ -138,25 +147,28 @@ public class ChatWindowController {
 			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
 				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
 
-				System.out.println("Selected tab index: " +Integer.toString(selectedIndex));
+				System.out.println("Selected tab index: " + Integer.toString(selectedIndex));
 				Tab tab = this.tabChat.getTabs().get(selectedIndex);
 
 				String currentTabName = tab.getText();
 
 				if (currentTabName == "Wszyscy") {
 					message.setType(Const.MSG_DO_WSZYSTKICH);
-					message.setReceiver(tab.getText());
+					message.setReceiver(Const.USER_ALL);
 				}
 				else {
 					message.setType(Const.MSG_DO_UZYTKOWNIKA);
-					message.setReceiver(Const.USER_ALL);
+					message.setReceiver(currentTabName);
+
 				}
-				message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
+				//message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
 				message.addLineToMessageBody(Const.BODY, msg);
 				message.setSender(loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
 				this.listaListChatow.get(currentTabName).add(loggedUserName.concat(" - ").concat(msg));
-				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(currentTabName)));
+				this.listaListView.get(currentTabName).setItems(FXCollections.observableArrayList(this.listaListChatow.get(currentTabName)));
+
+				//textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(currentTabName)));
 				textToSend.clear();
 			}
 		}
@@ -182,6 +194,13 @@ public class ChatWindowController {
 		listenningThread = new ListenningThread2();
 		listenningThread.start();
 		running = true;
+
+		listaListChatow = new HashMap<String, List<String>>();
+		listaListChatow.put("Wszyscy", new ArrayList<>());
+		listaListChatow.get("Wszyscy").add("iKomunikator - WITAMY !");
+
+		listaListView = new HashMap<String, ListView<String>>();
+		listaListView.put("Wszyscy", textChat);
 
 		//Listener for User List Update
 		listenningThread.getReceivedUserList().addListener(new ChangeListener<Number>() {

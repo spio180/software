@@ -119,9 +119,9 @@ public class Serialization {
 	   return result;
    }
 
-   public static Message DeSerializeMessage(String msg) {
+   public static Message DeSerializeMessage(String msg) throws UnsupportedEncodingException {
 	   Message result = new Message();
-	   InputStream stream = new ByteArrayInputStream(msg.getBytes());
+	   InputStream stream = new ByteArrayInputStream(msg.getBytes("UTF-8"));
 	   XMLDecoder decoder;
 
 	   try {

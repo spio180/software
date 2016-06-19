@@ -93,7 +93,9 @@ public class LogWindowController {
 		        				chatWindow = (AnchorPane) loader.load();
 		        				Stage stageChat = new Stage();
 		        		        stageChat.setTitle("iKomunikator - zalogowano na serwerze jako: " + textUserLogin.getText());
-		        		        Scene sceneChat = new Scene(chatWindow, 900, 600);
+		        		        stageChat.setMinWidth(900);
+		        		        stageChat.setMinHeight(600);
+		        		        Scene sceneChat = new Scene(chatWindow, 900, 600);		        		        
 		        		        stageChat.setScene(sceneChat);
 
 		        		        //setting TCP connection for ChatWindow

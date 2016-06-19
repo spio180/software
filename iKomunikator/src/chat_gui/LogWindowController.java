@@ -235,6 +235,15 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}
+		
+		if (result && this.textUserLogin.getLength()>40) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Nazwa u¿ytkownika mo¿e zawieraæ maksymalnie 40 znaków !");
+			alert.showAndWait();
+			this.textUserLogin.requestFocus();
+		}
 
 		if (result && !this.textUserLogin.getText().matches("[a-zA-Z0-9]+")) {
 			result = false;

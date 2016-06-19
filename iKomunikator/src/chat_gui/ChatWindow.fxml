@@ -50,9 +50,9 @@
                <children>
                   <SplitPane dividerPositions="0.29656160458452724" layoutX="-1.0" layoutY="-2.0" prefHeight="501.0" prefWidth="700.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-10.0">
                     <items>
-                      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="162.0" SplitPane.resizableWithParent="false">
+                      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="204.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <ListView fx:id="userList" layoutX="-52.0" layoutY="155.0" onMouseClicked="#OnListaUzytkownikowMouseClick" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+                              <ListView fx:id="userList" layoutX="-52.0" layoutY="155.0" onMouseClicked="#OnListaUzytkownikowMouseClick" prefHeight="443.0" prefWidth="184.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
                               <Label layoutX="9.0" layoutY="14.0" prefHeight="17.0" prefWidth="140.0" text="Lista użytkowników" AnchorPane.leftAnchor="9.0" />
                            </children>
                         </AnchorPane>

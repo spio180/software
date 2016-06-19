@@ -94,7 +94,7 @@ public class LogWindowController {
 		        				Stage stageChat = new Stage();
 		        		        stageChat.setTitle("iKomunikator - zalogowano na serwerze jako: " + textUserLogin.getText());
 		        		        stageChat.setMinWidth(900);
-		        		        stageChat.setMinHeight(600);
+		        		        stageChat.setMinHeight(620);
 		        		        Scene sceneChat = new Scene(chatWindow, 900, 600);		        		        
 		        		        stageChat.setScene(sceneChat);
 

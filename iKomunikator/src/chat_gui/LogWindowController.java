@@ -56,7 +56,7 @@ public class LogWindowController {
 		if (!this.PolaWypelnionePoprawnie()) {
 			return;
 		}
-		
+
 		butConnect.setDisable(true);
 
 		/*creating logging thread */
@@ -77,9 +77,9 @@ public class LogWindowController {
 		            @Override
 		            public void run() {
 	        			// get a handle to the stage
-	        		    Stage loginStage = (Stage) butConnect.getScene().getWindow();	        		    		            	
+	        		    Stage loginStage = (Stage) butConnect.getScene().getWindow();
 		            	int state = newValue.intValue();
-		            	
+
 		            	if (state == LoginStates.ACK_ACCEPT) {
 		            		System.out.println("loginStateProperty changed to ACK_ACCEPT");
 
@@ -128,7 +128,7 @@ public class LogWindowController {
 		        		        stageChat.show();
 		        				TextField textToSend = (TextField) sceneChat.lookup("#textToSend");
 		        				textToSend.requestFocus();
-		        		        
+
 		        			} catch (IOException e) {
 		        				// TODO Auto-generated catch block
 		        				System.out.println("Chat Window could not be created" );
@@ -164,11 +164,11 @@ public class LogWindowController {
 		    });
 
 	}
-	
+
 	private boolean PolaWypelnionePoprawnie() {
 		boolean result = true;
 		String validIpMask = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-		
+
 		if (result && this.textClientIP.getLength()==0) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -177,7 +177,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientIP.requestFocus();
 		}
-		
+
 		if (result && !this.textClientIP.getText().matches(validIpMask)) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -186,7 +186,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientIP.requestFocus();
 		}
-		
+
 		if (result && this.textClientPort.getLength()==0) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -195,7 +195,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
-		
+
 		if (result && !this.textClientPort.getText().matches("[0-9]+")) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -204,7 +204,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
-		
+
 		if (result && this.textClientPort.getLength()>5) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -213,7 +213,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
-		
+
 		if (result && (Integer.parseInt(this.textClientPort.getText())<0 || Integer.parseInt(this.textClientPort.getText())>65535)) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -222,7 +222,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
-		
+
 		if (result && this.textUserLogin.getLength()==0) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -231,7 +231,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}
-		
+
 		if (result && this.textUserLogin.getLength()>40) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
@@ -249,7 +249,7 @@ public class LogWindowController {
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}
-		
+
 		return result;
 	}
 

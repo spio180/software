@@ -136,7 +136,6 @@ public class ChatWindowController {
 		}
 	}
 
-
     private void wyslijWiadomosc() {
 
 		String msg = textToSend.getText();
@@ -161,7 +160,7 @@ public class ChatWindowController {
 					message.setReceiver(currentTabName);
 
 				}
-				//message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
+			
 				message.addLineToMessageBody(Const.BODY, msg);
 				message.setSender(loggedUserName);
 				tcpConnectionToServer.sendMessage(message);

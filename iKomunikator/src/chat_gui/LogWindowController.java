@@ -241,11 +241,11 @@ public class LogWindowController {
 			this.textUserLogin.requestFocus();
 		}
 
-		if (result && !this.textUserLogin.getText().matches("[a-zA-Z0-9]+")) {
+		if (result && !this.textUserLogin.getText().matches("[_a-zA-Z0-9]+")) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawna nazwa u¿ytkownika !");
+			alert.setContentText("Niepoprawna nazwa u¿ytkownika !\nDozwolone znaki to: litery, cydry oraz znak podkreœlenia [_].");
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}

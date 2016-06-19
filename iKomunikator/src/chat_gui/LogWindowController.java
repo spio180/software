@@ -75,7 +75,10 @@ public class LogWindowController {
 		          Platform.runLater(new Runnable() {
 		            @Override
 		            public void run() {
+	        			// get a handle to the stage
+	        		    Stage loginStage = (Stage) butConnect.getScene().getWindow();	        		    		            	
 		            	int state = newValue.intValue();
+		            	
 		            	if (state == LoginStates.ACK_ACCEPT) {
 		            		System.out.println("loginStateProperty changed to ACK_ACCEPT");
 
@@ -93,18 +96,14 @@ public class LogWindowController {
 
 		        		        //setting TCP connection for ChatWindow
 			        			ChatWindowController chatController = (ChatWindowController) loader.getController();
+			        			chatController.setLoginScene(loginStage);
 			        			chatController.setTcpConnectionToServer(connectionToServer);
 			        			chatController.setLoggedUserName(userLogin.getText());
 			        			chatController.startListenningThread2();
 
-
-
-
 			        			connectionToServer.setChatController(chatController);
 			        			connectionToServer.setUserLogin(userLogin.getText());
 			        			//connectionToServer.startListennigThread();
-
-
 
 		        		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		        		            public void handle(WindowEvent we) {
@@ -128,10 +127,8 @@ public class LogWindowController {
 		        		            }
 		        		        });
 
-
 		        		        stageChat.show();
-
-
+		        		        
 		        			} catch (IOException e) {
 		        				// TODO Auto-generated catch block
 		        				System.out.println("Chat Window could not be created" );
@@ -140,11 +137,9 @@ public class LogWindowController {
 		        			}
 
 
-		        			// get a handle to the stage
-		        		    Stage stage = (Stage) butConnect.getScene().getWindow();
-		        		    butConnect.setDisable(false);
+		        			butConnect.setDisable(false);
 		        		    // do what you have to do
-		        		    stage.hide();
+		        			loginStage.hide();
 
 		            	} else {
 		            		System.out.println("loginStateProperty changed to different value then ACK_ACCEPT");
@@ -198,6 +193,7 @@ public class LogWindowController {
 	    public void run() {
 
 	    	System.out.println(">>>>LoginThread: started");
+	    	System.out.println(">>>>Uzytkownik: " + userLoginName);
 
 	    	connectionToServer = new TcpClient();
 

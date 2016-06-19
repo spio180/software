@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
-
-import chat_gui.LogWindowController.LoginThread;
 import common.Const;
 import common.LoginStates;
 import common.Message;
@@ -36,10 +34,20 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class ChatWindowController {
+
+	private Stage stageOknaLogowania;
+	private volatile boolean running = true;
+	private TcpClient tcpConnectionToServer;
+	private String loggedUserName;
+	private Map<String, String> sortedUsers;
+	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
+
 	@FXML
 	private Button butWyczysc;
 	@FXML
 	public Button butWyslij;
+	@FXML
+	public Button butWyloguj;
 	@FXML
 	public ListView<String> textChat;
 	@FXML
@@ -48,22 +56,15 @@ public class ChatWindowController {
 	public ListView<String> userList;
 	@FXML
 	public TabPane tabChat;
-
-
-
-	//public static volatile String loggedUserName = "";
-	private volatile boolean running = true;
-	private TcpClient tcpConnectionToServer;
-	private String loggedUserName;
-
-
-
-
-	//List of users
-	Map<String, String> sortedUsers;
-	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
-
 	public ListenningThread2 listenningThread;
+
+	public void setLoginScene(Stage stage) {
+		if (stage == null) {
+			throw new NullPointerException();
+		}
+
+		this.stageOknaLogowania = stage;
+	}
 
 	public String getLoggedUserName() {
 		return loggedUserName;
@@ -81,6 +82,20 @@ public class ChatWindowController {
 	private void butWyczyscClick() {
 		textToSend.clear();
 	}
+
+	@FXML
+	private void butWylogujClick() {
+	    Stage stage = (Stage)this.butWyloguj.getScene().getWindow();
+	    stage.close();
+	    this.stageOknaLogowania.show();
+	    Scene scena = this.stageOknaLogowania.getScene();
+		TextField ipTextField = (TextField) scena.lookup("#userIPTest");
+		ipTextField.requestFocus();
+	}
+
+	@FXML private void butWyslijClick(){
+        wyslijWiadomosc();
+    }
 
 	@FXML
 	private void OnListaUzytkownikowMouseClick(MouseEvent event) {
@@ -113,43 +128,6 @@ public class ChatWindowController {
 		}
 	}
 
-	/*
-	@FXML
-	private void butWyslijClick() {
-
-		String msg = loggedUserName.concat(" - ").concat(textToSend.getText());
-
-
-		if (msg.length() != 0) {
-			Message message = new Message();
-
-			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
-				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
-				Tab tab = this.tabChat.getTabs().get(selectedIndex);
-
-				if (tab.getText() == "Wszyscy") {
-					message.setType(Const.MSG_DO_WSZYSTKICH);
-					message.setReceiver(tab.getText());
-				}
-				else {
-					message.setType(Const.MSG_DO_UZYTKOWNIKA);
-					message.setReceiver(Const.USER_ALL);
-				}
-				message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
-				message.addLineToMessageBody(Const.BODY, msg);
-				message.setSender(ChatWindowController.loggedUserName);
-				tcpConnectionToServer.sendMessage(message);
-				tcpConnectionToServer.listaListChatow.get(tab.getText()).add(msg);
-				textChat.setItems(FXCollections.observableArrayList(tcpConnectionToServer.listaListChatow.get(tab.getText())));
-				textToSend.clear();
-			}
-		}
-	}
-*/
-
-	@FXML private void butWyslijClick(){
-        wyslijWiadomosc();
-    }
 
     private void wyslijWiadomosc() {
 
@@ -161,7 +139,7 @@ public class ChatWindowController {
 
 			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
 				int selectedIndex = this.tabChat.getSelectionModel().getSelectedIndex();
-				
+
 				System.out.println("Selected tab index: " +Integer.toString(selectedIndex));
 				Tab tab = this.tabChat.getTabs().get(selectedIndex);
 
@@ -186,13 +164,11 @@ public class ChatWindowController {
 		}
     }
 
-
     @FXML public void handleEnterPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             wyslijWiadomosc();
         }
     }
-
 
 	public Boolean ContainsTab(String title) {
 		for (Tab tab : this.tabChat.getTabs()) {
@@ -204,17 +180,10 @@ public class ChatWindowController {
 		return false;
 	}
 
-
-
-
-
 	public void startListenningThread2() {
 		listenningThread = new ListenningThread2();
-
 		listenningThread.start();
 		running = true;
-
-
 
 		//Listener for User List Update
 		listenningThread.getReceivedUserList().addListener(new ChangeListener<Number>() {
@@ -248,15 +217,11 @@ public class ChatWindowController {
 		          Platform.runLater(new Runnable() {
 		            @Override
 		            public void run() {
-
-
 		            	System.out.println("Message for all received");
-
 		            }
 		          });
 		      }
 		    });
-
 	}
 
 	public void terminateListenningThread() {
@@ -325,9 +290,6 @@ public class ChatWindowController {
 	    	}
 
 	    	System.out.println(">>>>ListenningThread2: stoped");
-
 	    }
-
-	  }
-
+	}
 }

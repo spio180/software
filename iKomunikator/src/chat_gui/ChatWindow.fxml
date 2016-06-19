@@ -52,7 +52,7 @@
                     <items>
                       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="162.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <ListView onMouseClicked="#OnListaUzytkownikowMouseClick" fx:id="userList" layoutX="-52.0" layoutY="155.0" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
+                              <ListView fx:id="userList" layoutX="-52.0" layoutY="155.0" onMouseClicked="#OnListaUzytkownikowMouseClick" prefHeight="489.0" prefWidth="150.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
                               <Label layoutX="9.0" layoutY="14.0" prefHeight="17.0" prefWidth="140.0" text="Lista użytkowników" AnchorPane.leftAnchor="9.0" />
                            </children>
                         </AnchorPane>
@@ -75,9 +75,9 @@
                                     </AnchorPane>
                                   <AnchorPane prefHeight="83.0" prefWidth="577.0" SplitPane.resizableWithParent="false">
                                        <children>
-                                          <Button fx:id="butWyslij" layoutX="510.0" layoutY="55.0" mnemonicParsing="false" text="Wyślij" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="20.0"  onMouseClicked="#butWyslijClick"  />
-                                          <Button fx:id="butWyczysc" layoutX="430.0" layoutY="55.0" mnemonicParsing="false" text="Wyczyść" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="90.0" onMouseClicked="#butWyczyscClick" />
-                                          <TextField fx:id="textToSend" layoutX="43.0" layoutY="55.0" prefHeight="25.0" prefWidth="534.0" onKeyPressed="#handleEnterPressed" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
+                                          <Button fx:id="butWyslij" layoutX="15.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#butWyslijClick" text="Wyślij" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" />
+                                          <Button fx:id="butWyczysc" layoutX="453.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#butWyczyscClick" text="Wyczyść" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="69.0" />
+                                          <TextField fx:id="textToSend" layoutX="43.0" layoutY="55.0" onKeyPressed="#handleEnterPressed" prefHeight="25.0" prefWidth="534.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
                                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dee3e8" height="27.0" layoutX="8.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="30.0">
                                              <effect>
                                                 <InnerShadow color="#141d9a45" height="23.72" radius="10.68" />
@@ -88,6 +88,7 @@
                                                 <Font name="Cambria" size="25.0" />
                                              </font>
                                           </Text>
+                                          <Button fx:id="butWyloguj" layoutX="458.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#butWylogujClick" text="Wyloguj" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0" />
                                        </children>
                                     </AnchorPane>
                                 </items>

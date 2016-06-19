@@ -1,5 +1,6 @@
 package chat_gui;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -117,7 +118,14 @@ public class LogWindowController {
 			        		    			logoutMessage.setReceiver(Const.USER_SERVER);
 			        		    			logoutMessage.setSender(chatController.getLoggedUserName());
 			        		    	        logoutMessage.addLineToMessageBody(Const.LOGOUT, chatController.getLoggedUserName());
-			        		    	        connectionToServer.sendMessage(logoutMessage);
+			        		    	        try {
+												connectionToServer.sendMessage(logoutMessage);
+											} catch (UnsupportedEncodingException ex) {
+												Alert alert = new Alert(AlertType.ERROR);
+												alert.setTitle(Const.ERROR_HEADER);
+												alert.setContentText(ex.getMessage());
+												alert.showAndWait();
+											}
 		        		        			chatController.terminateListenningThread();
 		        		        			connectionToServer.closeSocket();
 		        		        			System.out.println("Connection to server closed");
@@ -299,7 +307,14 @@ public class LogWindowController {
 			loginMessage.setSender(textUserLogin.getText());
 	        loginMessage.addLineToMessageBody(Const.LOGIN, textUserLogin.getText());
 
-	        connectionToServer.sendMessage(loginMessage);
+	        try {
+				connectionToServer.sendMessage(loginMessage);
+			} catch (UnsupportedEncodingException ex) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle(Const.ERROR_HEADER);
+				alert.setContentText(ex.getMessage());
+				alert.showAndWait();
+			}
 
 	        Message loginMessageAns = new Message();
 	        int i;

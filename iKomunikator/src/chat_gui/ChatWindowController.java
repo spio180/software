@@ -1,6 +1,7 @@
 package chat_gui;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +93,7 @@ public class ChatWindowController {
 		ipTextField.requestFocus();
 	}
 
-	@FXML private void butWyslijClick(){
+	@FXML private void butWyslijClick() throws UnsupportedEncodingException{
         wyslijWiadomosc();
     }
 
@@ -128,7 +129,7 @@ public class ChatWindowController {
 		}
 	}
 
-    private void wyslijWiadomosc() {
+    private void wyslijWiadomosc() throws UnsupportedEncodingException {
 		String msg = textToSend.getText();
 
 		if (msg.length() != 0) {
@@ -187,7 +188,7 @@ public class ChatWindowController {
     	return false;
     }
 
-    @FXML public void handleEnterPressed(KeyEvent event) {
+    @FXML public void handleEnterPressed(KeyEvent event) throws UnsupportedEncodingException {
         if (event.getCode() == KeyCode.ENTER) {
             wyslijWiadomosc();
         }

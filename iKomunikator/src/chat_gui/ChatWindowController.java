@@ -41,6 +41,7 @@ public class ChatWindowController {
 	private HashMap<String, String> forbiddenExpressions = new HashMap<String, String>(); 
 	private HashMap<String, List<String>> listaListChatow;
 	private HashMap<String, ListView<String>> listaListView;
+	private HashMap<String, String> convertChars = new HashMap<String, String>();
 
 	@FXML
 	private Button butWyczysc;
@@ -129,16 +130,37 @@ public class ChatWindowController {
 		}
 	}
 	
+	public void InitializeCharConversionTable() {
+		this.convertChars = new HashMap<String, String>();
+		this.convertChars.put("π","a");
+		this.convertChars.put("Ê","c");
+		this.convertChars.put("Í","e");
+		this.convertChars.put("≥","l");
+		this.convertChars.put("Ò","n");
+		this.convertChars.put("Û","o");
+		this.convertChars.put("ú","s");
+		this.convertChars.put("ü","z");
+		this.convertChars.put("ø","z");
+		
+		this.convertChars.put("•","A");
+		this.convertChars.put("∆","C");
+		this.convertChars.put(" ","E");
+		this.convertChars.put("£","L");
+		this.convertChars.put("—","N");
+		this.convertChars.put("”","O");
+		this.convertChars.put("å","S");
+		this.convertChars.put("è","Z");
+		this.convertChars.put("Ø","Z");
+	}
 	   
-   private String ConvertUnacceptableCharacters(String in) {      
-	    if (in == null || ("".equals(in))) return null;
-	    StringBuffer out = new StringBuffer(in);
-	    for (int i = 0; i < out.length(); i++) {
-	        if(out.charAt(i) == 0x1a) {
-	            out.setCharAt(i, '-');
-	        }
-	    }
-	    return out.toString();
+    private String ConvertUnacceptableCharacters(String messageText) {     
+	   	String result = messageText;
+    	
+    	for(String key : this.convertChars.keySet()){
+    		result = result.replaceAll(key, this.convertChars.get(key));
+		}
+    	
+    	return result;
 	}
 
     private void wyslijWiadomosc() throws UnsupportedEncodingException {

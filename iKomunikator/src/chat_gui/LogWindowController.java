@@ -98,6 +98,7 @@ public class LogWindowController {
 
 		        		        //setting TCP connection for ChatWindow
 			        			ChatWindowController chatController = (ChatWindowController) loader.getController();
+			        			chatController.InitializeCharConversionTable();
 			        			chatController.setLoginScene(loginStage);
 			        			chatController.setTcpConnectionToServer(connectionToServer);
 			        			chatController.setLoggedUserName(textUserLogin.getText());

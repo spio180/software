@@ -16,12 +16,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import common.Const;
 import common.Message;
-import common.LoginStates;
+import common.LoginStates;;
 
 public class LogWindowController {
 	@FXML private Button butCancel;
@@ -148,7 +147,6 @@ public class LogWindowController {
 		private int serverPort;
 		private String userLoginName;
 
-
 		public LoginThread(String ip, int port, String user) {
 		      loginStateProperty = new SimpleIntegerProperty(this, "int", LoginStates.NOT_CONNECTED);
 		      serverIP = ip;
@@ -222,13 +220,9 @@ public class LogWindowController {
 	        	System.out.println("LoginThread: Timeout during waiting for LOGIN_OK");
 	        	loginStateProperty.set(LoginStates.TIMEOUT);
 	        }
-
-
+	        
 	    	System.out.println(">>>>LoginThread: closed");
 
 	    }
-
 	  }
-
-
 }

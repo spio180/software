@@ -182,7 +182,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Adres IP serwera jest niepoprawny [0-255].[0-255].[0-255].[0-255] !");
+			alert.setContentText("Adres IP serwera jest niepoprawny !\nPoprawny adres to: [0-255].[0-255].[0-255].[0-255] !");
 			alert.showAndWait();
 			this.textClientIP.requestFocus();
 		}
@@ -191,7 +191,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Podaj numer portu serwera !");
+			alert.setContentText("Podaj numer portu serwera [0-65535] !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -200,7 +200,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -209,7 +209,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -218,7 +218,7 @@ public class LogWindowController {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawny numer portu !");
+			alert.setContentText("Niepoprawny numer portu !\nWpisz wartoœæ z przedzia³u 0-65535 !");
 			alert.showAndWait();
 			this.textClientPort.requestFocus();
 		}
@@ -241,11 +241,11 @@ public class LogWindowController {
 			this.textUserLogin.requestFocus();
 		}
 
-		if (result && !this.textUserLogin.getText().matches("[a-zA-Z0-9]+")) {
+		if (result && !this.textUserLogin.getText().matches("[_a-zA-Z0-9]+")) {
 			result = false;
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle(Const.ERROR_HEADER);
-			alert.setContentText("Niepoprawna nazwa u¿ytkownika !");
+			alert.setContentText("Niepoprawna nazwa u¿ytkownika !\nDozwolone znaki to: litery, cyfry oraz znak podkreœlenia [_].");
 			alert.showAndWait();
 			this.textUserLogin.requestFocus();
 		}

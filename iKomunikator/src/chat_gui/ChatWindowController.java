@@ -17,11 +17,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -35,11 +37,9 @@ public class ChatWindowController {
 	private TcpClient tcpConnectionToServer;
 	private String loggedUserName;
 	private Map<String, String> sortedUsers;
-
+	private HashMap<String, String> forbiddenExpressions = new HashMap<String, String>(); 
 	private HashMap<String, List<String>> listaListChatow;
 	private HashMap<String, ListView<String>> listaListView;
-	//private HashMap<String, Tab> listaTab;
-
 
 	@FXML
 	private Button butWyczysc;
@@ -111,37 +111,35 @@ public class ChatWindowController {
 				}
 				else{
 					if (!Objects.equals(uzytkownik,loggedUserName)) {
-
-						//Adding new listview and list of text
 						listaListChatow.put(uzytkownik, new ArrayList<>());
 						listaListChatow.get(uzytkownik).add("Rozpocznij czat z " + uzytkownik);
-
-
 						listaListView.put(uzytkownik, new ListView<String>());
 						ListView<String> currentlistView = listaListView.get(uzytkownik);
-
 						currentlistView.setId(uzytkownik.concat("_chat"));
 						currentlistView.setItems(FXCollections.observableArrayList(listaListChatow.get(uzytkownik)));
-
 						Tab tab = new Tab();
 						tab.setText(uzytkownik);
 						tab.setClosable(true);
 						tab.setContent(currentlistView);
 						this.tabChat.getTabs().add(tab);
-
-
 					}
 				}
 			}
 		}
 	}
 
-
     private void wyslijWiadomosc() {
-
 		String msg = textToSend.getText();
 
 		if (msg.length() != 0) {
+			if (WiadomoscZawieraNiedozwoloneWyrazenie()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle(Const.INFO_HEADER);
+				alert.setContentText("Wiadomoœæ zawiera niedozwolone wyra¿enia !");
+				alert.showAndWait();
+				return;
+			}			
+			
 			Message message = new Message();
 
 			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
@@ -163,9 +161,8 @@ public class ChatWindowController {
 					System.out.println("Do pojedynczego");
 					message.setType(Const.MSG_DO_UZYTKOWNIKA);
 					message.setReceiver(currentTabName);
-
 				}
-				//message.setType(Const.MSG_DO_WSZYSTKICH); /// ³atka na komunikacjê
+			
 				message.addLineToMessageBody(Const.BODY, msg);
 				message.setSender(loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
@@ -176,6 +173,18 @@ public class ChatWindowController {
 				textToSend.clear();
 			}
 		}
+    }
+    
+    private boolean WiadomoscZawieraNiedozwoloneWyrazenie() {
+    	String msg = textToSend.getText();
+    	
+		for (String key : this.forbiddenExpressions.keySet()) {
+			if (msg.toLowerCase().contains(key.toLowerCase())) {
+				return true;
+			}
+		}   	
+    	
+    	return false;
     }
 
     @FXML public void handleEnterPressed(KeyEvent event) {
@@ -192,6 +201,16 @@ public class ChatWindowController {
 		}
 
 		return false;
+	}
+	
+	public void UpdateForbidden(HashMap<String, String> forbidden) {
+		this.forbiddenExpressions = new HashMap<String, String>();
+		
+		for (String key : forbidden.keySet()) {
+			if (!this.forbiddenExpressions.containsKey(key)) {
+				this.forbiddenExpressions.put(key,key);
+			}
+		}
 	}
 
 	public void startListenningThread2() {
@@ -255,7 +274,7 @@ public class ChatWindowController {
 
 		private IntegerProperty receivedUserListProperty;
 		private IntegerProperty receivedMessageAll;
-
+		private IntegerProperty listOfForbiddenExpressions;
 
 		public ListenningThread2() {
 		      receivedUserListProperty = new SimpleIntegerProperty(this, "int", 0);
@@ -274,7 +293,16 @@ public class ChatWindowController {
 		public int getReceivedMessageAllPropertyInt() {
 		      return receivedMessageAll.get();
 		}
+		
+		
+		public IntegerProperty getListOfForbiddenExpressions() {
+		      return listOfForbiddenExpressions;
+		}
 
+		public int getListOfForbiddenExpressionsInt() {
+		      return listOfForbiddenExpressions.get();
+		}
+		
 		public IntegerProperty getReceivedMessageAllProperty() {
 		      return receivedMessageAll;
 		}
@@ -307,13 +335,23 @@ public class ChatWindowController {
 	        			//receivedMessageAll.set(receivedUserListProperty.get() + 1);
 					}
 
-
 					if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
 						String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
 						List<String> stringListForAll = listaListChatow.get("Wszyscy");
 
 						stringListForAll.add(messageText);
 						receivedMessageAll.set(receivedMessageAll.get() + 1);
+					}
+					
+					if (message.getType().equals(Const.MSG_LISTA_WYRAZEN_ZABRONIONYCH)) {
+						listOfForbiddenExpressions.set(listOfForbiddenExpressions.get() + 1);						
+						forbiddenExpressions = new HashMap<String, String>();
+						
+						for (String key : message.getMessageBody().keySet()) {
+						    if (!forbiddenExpressions.containsKey(key)) {
+						    	forbiddenExpressions.put(key, message.getMessageBody().get(key));
+						    }
+						}
 					}
 	        	}
 	    	}

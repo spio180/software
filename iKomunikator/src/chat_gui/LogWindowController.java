@@ -79,21 +79,50 @@ public class LogWindowController {
 
 		        				chatWindow = (AnchorPane) loader.load();
 		        				Stage stageChat = new Stage();
-		        		        stageChat.setTitle("iKomunikator");
+		        		        stageChat.setTitle("iKomunikator - zalogowano na serwerze jako: " + userLogin.getText());
 		        		        Scene sceneChat = new Scene(chatWindow, 900, 600);
 		        		        stageChat.setScene(sceneChat);
-		        		        stageChat.show();
+
+		        		        //setting TCP connection for ChatWindow
+			        			ChatWindowController chatController = (ChatWindowController) loader.getController();
+			        			chatController.setTcpConnectionToServer(connectionToServer);
+			        			chatController.setLoggedUserName(userLogin.getText());
+			        			chatController.startListenningThread2();
+
+
+
+
+			        			connectionToServer.setChatController(chatController);
+			        			connectionToServer.setUserLogin(userLogin.getText());
+			        			//connectionToServer.startListennigThread();
+
+
 
 		        		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		        		            public void handle(WindowEvent we) {
 		        		                System.out.println("Stage is closing");
+
 		        		                if (connectionToServer != null) {
-		        		        			connectionToServer.terminateListenningThread();
+
+		        		                	System.out.println("Sending logout message to Server");
+		        		                	Message logoutMessage = new Message();
+			        		    			logoutMessage.setType(Const.MSG_WYLOGOWANIE);
+			        		    			logoutMessage.setReceiver(Const.USER_SERVER);
+			        		    			logoutMessage.setSender(chatController.getLoggedUserName());
+			        		    	        logoutMessage.addLineToMessageBody(Const.LOGIN, chatController.getLoggedUserName());
+
+			        		    	        connectionToServer.sendMessage(logoutMessage);
+
+		        		        			chatController.terminateListenningThread();
 		        		        			connectionToServer.closeSocket();
 		        		        			System.out.println("Connection to server closed");
 		        		        		}
 		        		            }
 		        		        });
+
+
+		        		        stageChat.show();
+
 
 		        			} catch (IOException e) {
 		        				// TODO Auto-generated catch block
@@ -102,12 +131,6 @@ public class LogWindowController {
 		        				return;
 		        			}
 
-		        			//setting TCP connection for ChatWindow
-		        			ChatWindowController chatController = (ChatWindowController) loader.getController();
-		        			chatController.setTcpConnectionToServer(connectionToServer);
-		        			connectionToServer.setChatController(chatController);
-
-		        			connectionToServer.startListennigThread();
 
 		        			// get a handle to the stage
 		        		    Stage stage = (Stage) butConnect.getScene().getWindow();
@@ -119,7 +142,6 @@ public class LogWindowController {
 		            		System.out.println("loginStateProperty changed to different value then ACK_ACCEPT");
 
 		            		String error_msg = "Nieznany b³¹d w trakcie logowania na serwer";
-
 
 		            	 	if (state ==  LoginStates.NOT_CONNECTED) error_msg = "Nie uzyskano po³¹czenia z serwerem";
 		            		if (state ==  LoginStates.CONNECTION_ERROR) error_msg = "Nie uzyskano po³¹czenia z serwerem";

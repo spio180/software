@@ -14,27 +14,54 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import common.Const;
+import common.LoginStates;
 import common.Message;
 import common.Serialization;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class TcpClient {
 	private InetAddress connectedAddress;
 	private int connectedPort = 0;
+	private String userLogin = "";
+
 	private Socket tcpSocket = null;
 	private BufferedReader inBuff;
 	private PrintWriter outPrint;
 	private Thread listennigThread;
+	private TcpListeningThread tcpListennigThread;
 	private volatile boolean running = true;
 	public HashMap<String, List<String>> listaListChatow = new HashMap<String, List<String>>();
 	public List<String> listaUzytkownikow = new ArrayList<>();
 	public ChatWindowController chatController = null;
 
+
+
+
 	public TcpClient() {
 		listaListChatow.put("Wszyscy", new ArrayList<>());
 	}
+
+	public String getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
+	}
+
 
 	public static String getCurrentIPAddress() {
 		InetAddress localaddr;
@@ -101,7 +128,9 @@ public class TcpClient {
 	}
 
 	public int startListennigThread() {
-		listennigThread = new Thread(new TcpListeningThread());
+
+		tcpListennigThread = new TcpListeningThread();
+		listennigThread = new Thread(tcpListennigThread);
 
 		try {
 			listennigThread.join();
@@ -114,6 +143,7 @@ public class TcpClient {
 		running = true;
 		return 0;
 	}
+
 
 	public void sendMessage(Message message) {
 		synchronized (this) {
@@ -154,7 +184,10 @@ public class TcpClient {
 	private class TcpListeningThread implements Runnable {
 
 		public TcpListeningThread() {
+
 		}
+
+
 
 		@Override
 		public void run() {
@@ -210,8 +243,8 @@ public class TcpClient {
 		private void LogowanieOK(Message message) {
 			this.ListaUzytkownikow(message);
 			System.out.println(message.toString());
-			ChatWindowController.loggedUserName=message.getReceiver();
-			String messageText = "Zalogowano na serwerze: " + ChatWindowController.loggedUserName;
+			//ChatWindowController.loggedUserName=message.getReceiver();
+			String messageText = "Zalogowano na serwerze: "; //+ ChatWindowController.loggedUserName;
 			listaListChatow.get("Wszyscy").add(messageText);
 
 			if (chatController != null) {

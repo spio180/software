@@ -299,7 +299,6 @@ public class ChatWindowController {
 		            	System.out.println("Message for all received");
 
 		            	listaListView.get("Wszyscy").setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));
-
 		            }
 		          });
 		      }
@@ -316,6 +315,19 @@ public class ChatWindowController {
 		            @Override
 		            public void run() {
 		            	System.out.println("Message for single user received");
+		            	for(String key : listaListChatow.keySet()){
+
+		            		if (listaListView.get(key) == null) {
+		            			listaListView.put(key, new ListView<String>());
+
+		            			Tab tab = new Tab();
+								tab.setText(key);
+								tab.setClosable(true);
+								tab.setContent(listaListView.get(key));
+								tabChat.getTabs().add(tab);
+		            		}
+		            		listaListView.get(key).setItems(FXCollections.observableArrayList(listaListChatow.get(key)));
+		            	}
 
 		            }
 		          });
@@ -387,14 +399,19 @@ public class ChatWindowController {
 	        				sortedUsers = new TreeMap<String, String>(message.getMessageBody());
 	        				receivedUserListProperty.set(receivedUserListProperty.get() + 1);
 	        				System.out.println("User list received");
-
 	        			}
 					}
-
 	        		if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
 	        			String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
 
-	        			System.out.println("Message from " + message.getSender());
+	        			String senderName =  message.getSender();
+	        			System.out.println("Message from " + senderName);
+	        			if (listaListChatow.get(senderName) == null) {
+	        				listaListChatow.put(senderName, new ArrayList<>());
+	        				listaListChatow.get(senderName).add("iKomunikator - WITAMY !");
+	        			}
+
+	        			listaListChatow.get(senderName).add(messageText);
 	        			receivedMessageSingleUser.set(receivedMessageSingleUser.get() + 1);
 					}
 

@@ -151,12 +151,16 @@ public class ChatWindowController {
 				Tab tab = this.tabChat.getTabs().get(selectedIndex);
 
 				String currentTabName = tab.getText();
+				System.out.println("Current tab name" + currentTabName);
 
-				if (currentTabName == "Wszyscy") {
+				//Tab: Wszyscy
+				if (selectedIndex == 0) {
+					System.out.println("Do wszystkich");
 					message.setType(Const.MSG_DO_WSZYSTKICH);
 					message.setReceiver(Const.USER_ALL);
 				}
 				else {
+					System.out.println("Do pojedynczego");
 					message.setType(Const.MSG_DO_UZYTKOWNIKA);
 					message.setReceiver(currentTabName);
 
@@ -234,6 +238,9 @@ public class ChatWindowController {
 		            @Override
 		            public void run() {
 		            	System.out.println("Message for all received");
+
+		            	listaListView.get("Wszyscy").setItems(FXCollections.observableArrayList(listaListChatow.get("Wszyscy")));
+
 		            }
 		          });
 		      }
@@ -284,6 +291,8 @@ public class ChatWindowController {
 
 	        	if (message != null) {
 
+	        		System.out.println("Received Message type: " + message.getType());
+
 	        		if (message.getType().equals(Const.MSG_LISTA_UZ)) {
 
 	        			if (message.getMessageBody().size() > 0) {
@@ -300,7 +309,11 @@ public class ChatWindowController {
 
 
 					if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
-						receivedMessageAll.set(receivedUserListProperty.get() + 1);
+						String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
+						List<String> stringListForAll = listaListChatow.get("Wszyscy");
+
+						stringListForAll.add(messageText);
+						receivedMessageAll.set(receivedMessageAll.get() + 1);
 					}
 	        	}
 	    	}

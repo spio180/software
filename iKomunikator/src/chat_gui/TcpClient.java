@@ -113,10 +113,14 @@ public class TcpClient {
 					String serializedMessage = inBuff.readLine();
 					System.out.println("Received msg: " + serializedMessage);
 					System.out.println("Received msg length: " + Integer.toString(serializedMessage.length()));
-					if (serializedMessage.length() < 2)
+					if (serializedMessage.length() < 2) {
 						return null;
-					else
+					}
+					else {
+						System.out.println("Message will be deserialized");
 						return Serialization.DeSerializeMessage(serializedMessage);
+					}
+
 				 }
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

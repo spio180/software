@@ -112,7 +112,7 @@ public class Serialization {
 	   XMLEncoder xmlEncoder = new XMLEncoder(baos);
 	   xmlEncoder.writeObject(msg);
 	   xmlEncoder.close();
-	   result = baos.toString();
+	   result = baos.toString("UTF-8");
 	   result = result.replace("\\n", "").replace("\n", "");
 	   result = result.concat("\n");
 	   return result;

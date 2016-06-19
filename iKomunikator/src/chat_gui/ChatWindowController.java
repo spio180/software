@@ -38,7 +38,7 @@ public class ChatWindowController {
 	private TcpClient tcpConnectionToServer;
 	private String loggedUserName;
 	private Map<String, String> sortedUsers;
-	private HashMap<String, String> forbiddenExpressions = new HashMap<String, String>(); 
+	private HashMap<String, String> forbiddenExpressions = new HashMap<String, String>();
 	private HashMap<String, List<String>> listaListChatow;
 	private HashMap<String, ListView<String>> listaListView;
 	private HashMap<String, String> convertChars = new HashMap<String, String>();
@@ -129,7 +129,7 @@ public class ChatWindowController {
 			}
 		}
 	}
-	
+
 	public void InitializeCharConversionTable() {
 		this.convertChars = new HashMap<String, String>();
 		this.convertChars.put("¹","a");
@@ -141,7 +141,7 @@ public class ChatWindowController {
 		this.convertChars.put("œ","s");
 		this.convertChars.put("Ÿ","z");
 		this.convertChars.put("¿","z");
-		
+
 		this.convertChars.put("¥","A");
 		this.convertChars.put("Æ","C");
 		this.convertChars.put("Ê","E");
@@ -152,14 +152,14 @@ public class ChatWindowController {
 		this.convertChars.put("","Z");
 		this.convertChars.put("¯","Z");
 	}
-	   
-    private String ConvertUnacceptableCharacters(String messageText) {     
+
+    private String ConvertUnacceptableCharacters(String messageText) {
 	   	String result = messageText;
-    	
+
     	for(String key : this.convertChars.keySet()){
     		result = result.replaceAll(key, this.convertChars.get(key));
 		}
-    	
+
     	return result;
 	}
 
@@ -173,8 +173,8 @@ public class ChatWindowController {
 				alert.setContentText("Wiadomoœæ zawiera niedozwolone wyra¿enia !");
 				alert.showAndWait();
 				return;
-			}			
-			
+			}
+
 			Message message = new Message();
 
 			if (this.tabChat != null && this.tabChat.getTabs().size()>0) {
@@ -197,7 +197,7 @@ public class ChatWindowController {
 					message.setType(Const.MSG_DO_UZYTKOWNIKA);
 					message.setReceiver(currentTabName);
 				}
-			
+
 				message.addLineToMessageBody(Const.BODY, msg);
 				message.setSender(loggedUserName);
 				tcpConnectionToServer.sendMessage(message);
@@ -209,16 +209,16 @@ public class ChatWindowController {
 			}
 		}
     }
-    
+
     private boolean WiadomoscZawieraNiedozwoloneWyrazenie() {
     	String msg = textToSend.getText();
-    	
+
 		for (String key : this.forbiddenExpressions.keySet()) {
 			if (msg.toLowerCase().contains(key.toLowerCase())) {
 				return true;
 			}
-		}   	
-    	
+		}
+
     	return false;
     }
 
@@ -237,10 +237,10 @@ public class ChatWindowController {
 
 		return false;
 	}
-	
+
 	public void UpdateForbidden(HashMap<String, String> forbidden) {
 		this.forbiddenExpressions = new HashMap<String, String>();
-		
+
 		for (String key : forbidden.keySet()) {
 			if (!this.forbiddenExpressions.containsKey(key)) {
 				this.forbiddenExpressions.put(key,key);
@@ -282,7 +282,7 @@ public class ChatWindowController {
 		      }
 		    });
 
-		//Listener for User List Update
+		//Listener for All user message
 		listenningThread.getReceivedMessageAllProperty().addListener(new ChangeListener<Number>() {
 		      @Override
 		      public void changed(final ObservableValue<? extends Number> observable,
@@ -299,6 +299,23 @@ public class ChatWindowController {
 		          });
 		      }
 		    });
+
+
+		//Listener for All user message
+		listenningThread.getreceivedMessageSingleUserProperty().addListener(new ChangeListener<Number>() {
+		      @Override
+		      public void changed(final ObservableValue<? extends Number> observable,
+		          final Number oldValue, final Number newValue) {
+
+		          Platform.runLater(new Runnable() {
+		            @Override
+		            public void run() {
+		            	System.out.println("Message for single user received");
+
+		            }
+		          });
+		      }
+		    });
 	}
 
 	public void terminateListenningThread() {
@@ -309,11 +326,13 @@ public class ChatWindowController {
 
 		private IntegerProperty receivedUserListProperty;
 		private IntegerProperty receivedMessageAll;
-		private IntegerProperty listOfForbiddenExpressions;
+		private IntegerProperty receivedMessageSingleUser;
+
 
 		public ListenningThread2() {
 		      receivedUserListProperty = new SimpleIntegerProperty(this, "int", 0);
 		      receivedMessageAll = new SimpleIntegerProperty(this, "int", 0);
+		      receivedMessageSingleUser = new SimpleIntegerProperty(this, "int", 0);
 		      setDaemon(true);
 		}
 
@@ -328,18 +347,19 @@ public class ChatWindowController {
 		public int getReceivedMessageAllPropertyInt() {
 		      return receivedMessageAll.get();
 		}
-		
-		
-		public IntegerProperty getListOfForbiddenExpressions() {
-		      return listOfForbiddenExpressions;
-		}
 
-		public int getListOfForbiddenExpressionsInt() {
-		      return listOfForbiddenExpressions.get();
-		}
-		
+
 		public IntegerProperty getReceivedMessageAllProperty() {
 		      return receivedMessageAll;
+		}
+
+
+		public int getreceivedMessageSingleUserInt() {
+		      return receivedMessageSingleUser.get();
+		}
+
+		public IntegerProperty getreceivedMessageSingleUserProperty() {
+		      return receivedMessageSingleUser;
 		}
 
 	 	@Override
@@ -367,7 +387,10 @@ public class ChatWindowController {
 					}
 
 	        		if (message.getType().equals(Const.MSG_DO_UZYTKOWNIKA)) {
-	        			//receivedMessageAll.set(receivedUserListProperty.get() + 1);
+	        			String messageText = message.getSender().concat(" - ").concat(message.getMessageBody().get(Const.BODY)).replace("\\n", "").replace("\n", "");
+
+	        			System.out.println("Message from " + message.getSender());
+	        			receivedMessageSingleUser.set(receivedMessageSingleUser.get() + 1);
 					}
 
 					if (message.getType().equals(Const.MSG_DO_WSZYSTKICH)) {
@@ -377,11 +400,11 @@ public class ChatWindowController {
 						stringListForAll.add(messageText);
 						receivedMessageAll.set(receivedMessageAll.get() + 1);
 					}
-					
+
 					if (message.getType().equals(Const.MSG_LISTA_WYRAZEN_ZABRONIONYCH)) {
-						listOfForbiddenExpressions.set(listOfForbiddenExpressions.get() + 1);						
+
 						forbiddenExpressions = new HashMap<String, String>();
-						
+
 						for (String key : message.getMessageBody().keySet()) {
 						    if (!forbiddenExpressions.containsKey(key)) {
 						    	forbiddenExpressions.put(key, message.getMessageBody().get(key));

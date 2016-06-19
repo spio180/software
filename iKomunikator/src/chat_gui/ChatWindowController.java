@@ -29,6 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class ChatWindowController {
@@ -86,12 +87,16 @@ public class ChatWindowController {
 
 	@FXML
 	private void butWylogujClick() {
+		System.out.println("Kliknieto button WYLOGUJ - poczatek obslugi zdarzenia");
 	    Stage stage = (Stage)this.butWyloguj.getScene().getWindow();
-	    stage.close();
+	    stage.hide();
+	    stage.getOnCloseRequest().handle(new WindowEvent(stage,WindowEvent.WINDOW_CLOSE_REQUEST));
+
 	    this.stageOknaLogowania.show();
 	    Scene scena = this.stageOknaLogowania.getScene();
 		TextField ipTextField = (TextField) scena.lookup("#userIPTest");
 		ipTextField.requestFocus();
+		System.out.println("Kliknieto button WYLOGUJ - koniec obslugi zdarzenia");
 	}
 
 	@FXML private void butWyslijClick() throws UnsupportedEncodingException{

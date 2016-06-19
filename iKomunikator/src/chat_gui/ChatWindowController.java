@@ -186,7 +186,6 @@ public class ChatWindowController {
 						}
 
 		            	System.out.println("User list updated");
-
 		            }
 		          });
 		      }

@@ -14,4 +14,6 @@ public class Const {
 	public static String LOGOUT = "LOGOUT";
 	public static String BODY = "MESSAGE_BODY";
 	public static String USER = "USER";
+	public static String ERROR_HEADER = "B³¹d !";
+	public static String INFO_HEADER = "Komunikat";
 }

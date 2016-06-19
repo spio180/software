@@ -26,7 +26,7 @@ public class LogWindowController {
 	@FXML private Button butCancel;
 	@FXML private Button butConnect;
 	@FXML private TextField textClientIP;
-	@FXML private TextField userLogin;
+	@FXML private TextField textUserLogin;
 	@FXML private Pane tcpClientPort;
 	@FXML private TextField textClientPort;
 
@@ -47,13 +47,17 @@ public class LogWindowController {
 
 	@FXML private void connectButtonAction() {
 
+		if (!this.PolaWypelnionePoprawnie()) {
+			return;
+		}
+		
 		butConnect.setDisable(true);
 
 		/*creating logging thread */
 		LoginThread threadToLogin = null;
 		threadToLogin = new LoginThread(textClientIP.getText(),
 				Integer.parseInt(textClientPort.getText()),
-				userLogin.getText()
+				this.textUserLogin.getText()
 				);
 
 		threadToLogin.start();
@@ -81,7 +85,7 @@ public class LogWindowController {
 
 		        				chatWindow = (AnchorPane) loader.load();
 		        				Stage stageChat = new Stage();
-		        		        stageChat.setTitle("iKomunikator - zalogowano na serwerze jako: " + userLogin.getText());
+		        		        stageChat.setTitle("iKomunikator - zalogowano na serwerze jako: " + textUserLogin.getText());
 		        		        Scene sceneChat = new Scene(chatWindow, 900, 600);
 		        		        stageChat.setScene(sceneChat);
 
@@ -89,11 +93,11 @@ public class LogWindowController {
 			        			ChatWindowController chatController = (ChatWindowController) loader.getController();
 			        			chatController.setLoginScene(loginStage);
 			        			chatController.setTcpConnectionToServer(connectionToServer);
-			        			chatController.setLoggedUserName(userLogin.getText());
+			        			chatController.setLoggedUserName(textUserLogin.getText());
 			        			chatController.startListenningThread2();
 
 			        			connectionToServer.setChatController(chatController);
-			        			connectionToServer.setUserLogin(userLogin.getText());
+			        			connectionToServer.setUserLogin(textUserLogin.getText());
 			        			//connectionToServer.startListennigThread();
 
 		        		        stageChat.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -142,9 +146,8 @@ public class LogWindowController {
 		            		if (state ==  LoginStates.ACK_REJECT) error_msg = "U¿ytkownik o tej nazwie ju¿ istnieje lub przekroczono dozwolon¹ liczbê u¿ytkowników.";
 		            		if (state ==  LoginStates.TIMEOUT) error_msg = "Timeout w oczekiwaniu na potwierdzenie logowania";
 
-
 		            		Alert alert = new Alert(AlertType.ERROR);
-							alert.setTitle("B³¹d");
+							alert.setTitle(Const.ERROR_HEADER);
 							alert.setContentText(error_msg);
 							alert.showAndWait();
 
@@ -155,6 +158,85 @@ public class LogWindowController {
 		      }
 		    });
 
+	}
+	
+	private boolean PolaWypelnionePoprawnie() {
+		boolean result = true;
+		String validIpMask = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+		
+		if (result && this.textClientIP.getLength()==0) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Podaj adres serwera !");
+			alert.showAndWait();
+			this.textClientIP.requestFocus();
+		}
+		
+		if (result && !this.textClientIP.getText().matches(validIpMask)) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Adres IP serwera jest niepoprawny [0-255].[0-255].[0-255].[0-255] !");
+			alert.showAndWait();
+			this.textClientIP.requestFocus();
+		}
+		
+		if (result && this.textClientPort.getLength()==0) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Podaj numer portu serwera !");
+			alert.showAndWait();
+			this.textClientPort.requestFocus();
+		}
+		
+		if (result && !this.textClientPort.getText().matches("[0-9]+")) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Niepoprawny numer portu !");
+			alert.showAndWait();
+			this.textClientPort.requestFocus();
+		}
+		
+		if (result && this.textClientPort.getLength()>5) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Niepoprawny numer portu !");
+			alert.showAndWait();
+			this.textClientPort.requestFocus();
+		}
+		
+		if (result && (Integer.parseInt(this.textClientPort.getText())<0 || Integer.parseInt(this.textClientPort.getText())>65535)) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Niepoprawny numer portu !");
+			alert.showAndWait();
+			this.textClientPort.requestFocus();
+		}
+		
+		if (result && this.textUserLogin.getLength()==0) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Podaj nazwê u¿ytkownika !");
+			alert.showAndWait();
+			this.textUserLogin.requestFocus();
+		}
+
+		if (result && !this.textUserLogin.getText().matches("[a-zA-Z0-9]+")) {
+			result = false;
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle(Const.ERROR_HEADER);
+			alert.setContentText("Niepoprawna nazwa u¿ytkownika !");
+			alert.showAndWait();
+			this.textUserLogin.requestFocus();
+		}
+		
+		return result;
 	}
 
 	public class LoginThread extends Thread {
@@ -200,8 +282,8 @@ public class LogWindowController {
 	    	Message loginMessage = new Message();
 			loginMessage.setType(Const.MSG_LOGOWANIE);
 			loginMessage.setReceiver(Const.USER_SERVER);
-			loginMessage.setSender(userLogin.getText());
-	        loginMessage.addLineToMessageBody(Const.LOGIN, userLogin.getText());
+			loginMessage.setSender(textUserLogin.getText());
+	        loginMessage.addLineToMessageBody(Const.LOGIN, textUserLogin.getText());
 
 	        connectionToServer.sendMessage(loginMessage);
 
@@ -211,7 +293,6 @@ public class LogWindowController {
 	        	loginMessageAns = connectionToServer.getMsgFromInBuff();
 
 	        	if (loginMessageAns != null) {
-		        	// Msg verfication
 		        	if (loginMessageAns.getType().equals(Const.MSG_LOGOWANIE_OK)){
 		        		System.out.println("LoginThread: Connection to server established");
 		        		loginStateProperty.set(LoginStates.ACK_ACCEPT);
@@ -223,15 +304,12 @@ public class LogWindowController {
 		        		break;
 		        	}
 	        	}
-	        	//waiting for message
+
 	        	try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        	//System.out.println("Index: " + Integer.toString(i));
-
 	        }
 
 	        if (i >= 500) {
@@ -240,7 +318,6 @@ public class LogWindowController {
 	        }
 	        
 	    	System.out.println(">>>>LoginThread: closed");
-
 	    }
 	  }
 }

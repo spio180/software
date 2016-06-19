@@ -13,7 +13,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_gui.LogWindowController">
    <top>
-      <Pane fx:id="tcpClientPort" nodeOrientation="LEFT_TO_RIGHT" onKeyPressed="#OnKeyPressedEnter" prefHeight="400.0" prefWidth="280.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="tcpClientPort" nodeOrientation="LEFT_TO_RIGHT" onKeyPressed="#OnKeyPressedEnter" prefHeight="361.0" prefWidth="280.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="butConnect" blendMode="SRC_ATOP" contentDisplay="TOP" defaultButton="true" graphicTextGap="5.0" layoutX="60.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#connectButtonAction" text="Zaloguj" />
             <Button fx:id="butCancel" blendMode="SRC_ATOP" layoutX="185.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#closeButtonAction" text="Anuluj" />

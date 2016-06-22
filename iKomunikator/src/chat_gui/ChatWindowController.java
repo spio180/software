@@ -170,6 +170,14 @@ public class ChatWindowController {
 
     private void wyslijWiadomosc() throws UnsupportedEncodingException {
 		String msg = this.ConvertUnacceptableCharacters(textToSend.getText());
+		
+		if (msg.length()>255) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(Const.INFO_HEADER);
+			alert.setContentText("Maksymalna d³ugoœæ wiadomnoœci to 255 znaków !");
+			alert.showAndWait();
+			return;
+		}
 
 		if (msg.length() != 0) {
 			if (WiadomoscZawieraNiedozwoloneWyrazenie()) {

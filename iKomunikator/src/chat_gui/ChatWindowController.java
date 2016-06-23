@@ -103,7 +103,7 @@ public class ChatWindowController {
 
 	@FXML 
 	private void butZamknijZakladkeUzytkownikaClick() throws UnsupportedEncodingException{
-		if (userList.getSelectionModel().getSelectedItem() != null) {
+		if (this.tabChat.getSelectionModel() != null) {
 			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
 			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
 		
@@ -191,16 +191,18 @@ public class ChatWindowController {
     	
 		String msg = this.ConvertUnacceptableCharacters(textToSend.getText());
 		
-		if (userList.getSelectionModel().getSelectedItem() != null) {
+		if (this.tabChat.getSelectionModel() != null) {
 			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
 			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
 		
-			if (activeTabIndex > 0 && !this.sortedUsers.containsKey(activeTabText)) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle(Const.INFO_HEADER);
-				alert.setContentText("Nie mo¿esz wys³aæ wiadomoœci do tego u¿ytkownika!\nTen u¿ytkownik nie jest dostêpny na czacie!");
-				alert.showAndWait();
-				return;
+			if (activeTabIndex > 0) {
+				if (!this.sortedUsers.containsKey(activeTabText)) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle(Const.INFO_HEADER);
+					alert.setContentText("Nie mo¿esz wys³aæ wiadomoœci do tego u¿ytkownika!\nTen u¿ytkownik nie jest dostêpny na czacie!");
+					alert.showAndWait();
+					return;
+				}
 			}
 		}
 		

@@ -51,6 +51,8 @@ public class ChatWindowController {
 	@FXML
 	public Button butWyloguj;
 	@FXML
+	public Button butZamknijZakladkeUzytkownika;	
+	@FXML
 	public ListView<String> textChat;
 	@FXML
 	private TextField textToSend;
@@ -99,8 +101,25 @@ public class ChatWindowController {
 		System.out.println("Kliknieto button WYLOGUJ - koniec obslugi zdarzenia");
 	}
 
-	@FXML private void butWyslijClick() throws UnsupportedEncodingException{
-        wyslijWiadomosc();
+	@FXML 
+	private void butZamknijZakladkeUzytkownikaClick() throws UnsupportedEncodingException{
+		if (userList.getSelectionModel().getSelectedItem() != null) {
+			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
+			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
+		
+			if (activeTabIndex>0) {
+				this.tabChat.getTabs().remove(activeTabIndex);
+				
+				if (listaListChatow.containsValue(activeTabText)) {
+					listaListChatow.remove(activeTabText);
+				}
+			}
+		}
+    }
+	
+	@FXML 
+	private void butWyslijClick() throws UnsupportedEncodingException {
+		this.wyslijWiadomosc();
     }
 
 	@FXML
@@ -169,7 +188,21 @@ public class ChatWindowController {
 	}
 
     private void wyslijWiadomosc() throws UnsupportedEncodingException {
+    	
 		String msg = this.ConvertUnacceptableCharacters(textToSend.getText());
+		
+		if (userList.getSelectionModel().getSelectedItem() != null) {
+			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
+			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
+		
+			if (activeTabIndex > 0 && !this.sortedUsers.containsKey(activeTabText)) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle(Const.INFO_HEADER);
+				alert.setContentText("Nie mo¿esz wys³aæ wiadomoœci do tego u¿ytkownika!\nTen u¿ytkownik nie jest dostêpny na czacie!");
+				alert.showAndWait();
+				return;
+			}
+		}
 		
 		if (msg.length()>255) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -227,8 +260,11 @@ public class ChatWindowController {
     	String msg = textToSend.getText();
 
 		for (String key : this.forbiddenExpressions.keySet()) {
-			if (msg.toLowerCase().contains(key.toLowerCase())) {
-				return true;
+			if (key.length()>0)
+			{
+				if (msg.toLowerCase().contains(key.toLowerCase())) {
+					return true;
+				}
 			}
 		}
 

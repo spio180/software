@@ -4,8 +4,10 @@ import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -122,7 +124,7 @@ public class Serialization {
 	   XMLDecoder decoder=null;
 	   
 	   try {
-			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(SERIALIZED_FILE_NAME)));
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(Const.SERIALIZED_FILE_NAME)));
 		} catch (FileNotFoundException ex) {
 			Log.WriteToLog(ex.getMessage());
 		}

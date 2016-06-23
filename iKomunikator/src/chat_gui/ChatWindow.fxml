@@ -44,6 +44,7 @@
                         </Text>
                      </children>
                   </Pane>
+                  <Button  fx:id="butZamknijZakladkeUzytkownika" onMouseClicked="#butZamknijZakladkeUzytkownikaClick" layoutX="510.0" layoutY="74.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Zamknij zakładkę użytkownika" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="6.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0">

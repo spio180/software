@@ -51,7 +51,7 @@ public class ChatWindowController {
 	@FXML
 	public Button butWyloguj;
 	@FXML
-	public Button butZamknijZakladkeUzytkownika;	
+	public Button butZamknijZakladkeUzytkownika;
 	@FXML
 	public ListView<String> textChat;
 	@FXML
@@ -101,23 +101,28 @@ public class ChatWindowController {
 		System.out.println("Kliknieto button WYLOGUJ - koniec obslugi zdarzenia");
 	}
 
-	@FXML 
+	@FXML
 	private void butZamknijZakladkeUzytkownikaClick() throws UnsupportedEncodingException{
 		if (this.tabChat.getSelectionModel() != null) {
 			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
 			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
-		
+
 			if (activeTabIndex>0) {
 				this.tabChat.getTabs().remove(activeTabIndex);
-				
-				if (listaListChatow.containsValue(activeTabText)) {
+
+				if (listaListChatow.containsKey(activeTabText)) {
 					listaListChatow.remove(activeTabText);
 				}
+
+				if (listaListView.containsKey(activeTabText)) {
+					listaListView.remove(activeTabText);
+				}
+
 			}
 		}
     }
-	
-	@FXML 
+
+	@FXML
 	private void butWyslijClick() throws UnsupportedEncodingException {
 		this.wyslijWiadomosc();
     }
@@ -188,13 +193,13 @@ public class ChatWindowController {
 	}
 
     private void wyslijWiadomosc() throws UnsupportedEncodingException {
-    	
+
 		String msg = this.ConvertUnacceptableCharacters(textToSend.getText());
-		
+
 		if (this.tabChat.getSelectionModel() != null) {
 			int activeTabIndex = this.tabChat.getSelectionModel().getSelectedIndex();
 			String activeTabText = this.tabChat.getSelectionModel().getSelectedItem().getText();
-		
+
 			if (activeTabIndex > 0) {
 				if (!this.sortedUsers.containsKey(activeTabText)) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -205,7 +210,7 @@ public class ChatWindowController {
 				}
 			}
 		}
-		
+
 		if (msg.length()>255) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle(Const.INFO_HEADER);
@@ -351,7 +356,7 @@ public class ChatWindowController {
 		    });
 
 
-		//Listener for All user message
+		//Listener for single user message
 		listenningThread.getreceivedMessageSingleUserProperty().addListener(new ChangeListener<Number>() {
 		      @Override
 		      public void changed(final ObservableValue<? extends Number> observable,
